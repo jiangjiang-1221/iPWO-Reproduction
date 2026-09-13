@@ -19,13 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Third-party notice
-
-The IEEE CEC2017 and CEC2022 benchmark implementations (cec17_func.cpp,
-cec17_func.mexw64), the accompanying input_data files and the
-Get_Functions_cec2017.m wrappers originate from the official benchmark suites
-distributed by their authors and remain subject to their own terms. They are
-redistributed here solely to make the experiments reproducible.

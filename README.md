@@ -169,8 +169,14 @@ paper can be regenerated from the compact `data/repro/` files that *are* include
 ## 7. License
 
 Released under the MIT License — see [`LICENSE`](LICENSE).
-The CEC2017 / CEC2022 benchmark implementations and the `input_data*` files originate
-from the official benchmark suites and remain subject to their own terms.
+
+### Third-party notice
+
+The IEEE CEC2017 and CEC2022 benchmark implementations (`cec17_func.cpp`,
+`cec17_func.mexw64`), the accompanying `input_data*` files and the
+`Get_Functions_cec2017.m` wrappers originate from the official benchmark suites
+distributed by their authors and remain subject to their own terms. They are
+redistributed here solely to make the experiments reproducible.
 
 ## 8. Citation
 
