@@ -1,0 +1,26 @@
+# ---- Large raw optimization records (≈15 GB, intentionally NOT tracked) ----
+# `data/raw/` holds the full per-run Results.mat files; many of them exceed
+# GitHub's 100 MB per-file limit. Every published figure can still be
+# regenerated from the compact `data/repro/` files that ARE tracked.
+**/data/raw/
+
+# ---- MATLAB / Python / editor scratch ----
+*.asv
+*.autosave
+*.m~
+**/figures/fig/
+**/figures/from_repro_data/
+**/_old_png_backup/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# ---- logs / backups / temp ----
+*.log
+*.bak
+*.tmp
+
+# ---- OS ----
+Thumbs.db
+Desktop.ini
+.DS_Store
