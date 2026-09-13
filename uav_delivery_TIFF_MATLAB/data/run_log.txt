@@ -1,0 +1,952 @@
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=4, Nc=20, Q=12.0kg, V=15.0m/s, d_min=6m
+Pads: [59.9 59.9 0;40.1 59.9 0;40.1 40.1 0;59.9 40.1 0]
+Dim D=20, Pop=30, MaxFEs=8000, Runs=51
+
+  run  1 / 51 done  (best makespan so far = 164.61)
+  run  2 / 51 done  (best makespan so far = 166.92)
+  run  3 / 51 done  (best makespan so far = 166.43)
+  run  4 / 51 done  (best makespan so far = 167.91)
+  run  5 / 51 done  (best makespan so far = 167.16)
+  run  6 / 51 done  (best makespan so far = 166.78)
+  run  7 / 51 done  (best makespan so far = 167.07)
+  run  8 / 51 done  (best makespan so far = 166.57)
+  run  9 / 51 done  (best makespan so far = 166.85)
+  run 10 / 51 done  (best makespan so far = 166.24)
+  run 11 / 51 done  (best makespan so far = 165.80)
+  run 12 / 51 done  (best makespan so far = 166.22)
+  run 13 / 51 done  (best makespan so far = 167.01)
+  run 14 / 51 done  (best makespan so far = 166.57)
+  run 15 / 51 done  (best makespan so far = 167.05)
+  run 16 / 51 done  (best makespan so far = 166.56)
+  run 17 / 51 done  (best makespan so far = 165.50)
+  run 18 / 51 done  (best makespan so far = 167.01)
+  run 19 / 51 done  (best makespan so far = 166.15)
+  run 20 / 51 done  (best makespan so far = 166.71)
+  run 21 / 51 done  (best makespan so far = 165.96)
+  run 22 / 51 done  (best makespan so far = 165.95)
+  run 23 / 51 done  (best makespan so far = 167.00)
+  run 24 / 51 done  (best makespan so far = 166.68)
+  run 25 / 51 done  (best makespan so far = 166.47)
+  run 26 / 51 done  (best makespan so far = 166.77)
+  run 27 / 51 done  (best makespan so far = 165.82)
+  run 28 / 51 done  (best makespan so far = 166.93)
+  run 29 / 51 done  (best makespan so far = 166.67)
+  run 30 / 51 done  (best makespan so far = 165.13)
+  run 31 / 51 done  (best makespan so far = 167.27)
+  run 32 / 51 done  (best makespan so far = 165.31)
+  run 33 / 51 done  (best makespan so far = 167.81)
+  run 34 / 51 done  (best makespan so far = 167.79)
+  run 35 / 51 done  (best makespan so far = 166.87)
+  run 36 / 51 done  (best makespan so far = 166.66)
+  run 37 / 51 done  (best makespan so far = 167.17)
+  run 38 / 51 done  (best makespan so far = 167.24)
+  run 39 / 51 done  (best makespan so far = 165.96)
+  run 40 / 51 done  (best makespan so far = 166.48)
+  run 41 / 51 done  (best makespan so far = 167.63)
+  run 42 / 51 done  (best makespan so far = 167.36)
+  run 43 / 51 done  (best makespan so far = 167.20)
+  run 44 / 51 done  (best makespan so far = 166.72)
+  run 45 / 51 done  (best makespan so far = 165.79)
+  run 46 / 51 done  (best makespan so far = 165.58)
+  run 47 / 51 done  (best makespan so far = 166.75)
+  run 48 / 51 done  (best makespan so far = 166.48)
+  run 49 / 51 done  (best makespan so far = 166.67)
+  run 50 / 51 done  (best makespan so far = 166.14)
+  run 51 / 51 done  (best makespan so far = 166.85)
+Optimization done: 7250.0 s
+
+Alg      Best         Median       Mean         Std          AvgRank    p_vs_iPWO 
+iPWO     164.6        167.6        167.4        0.8844       2.922      -         
+PWO      169.1        198.9        201.3        23.36        7.000      <1e-3     
+GWO      165.8        168.2        168.7        3.9          4.549      <1e-3     
+PSO      165.8        168.2        168.1        1.141        4.314      <1e-3     
+DE       165.8        167.3        167.4        0.6582       2.765      0.486     
+MGO      165.5        167.6        167.5        0.6258       3.098      0.989     
+SFOA     165.3        167.8        167.6        0.6884       3.353      0.37      
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=20  无人机数=4  makespan=164.61 s
+  惩罚: cap=0 obs=15.9 conf=0 kin=0
+  各机: load0=[9.41066304332401 9.18786776289945 5.69164676599341 10.2083751961248]  times=[163.051844650712 164.500984578564 164.612249294975 163.785344815939]
+Total elapsed: 7437.1 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=12.0kg, V=15.0m/s, d_min=6m
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+  run  1 / 51 done  (best makespan so far = 168.81)
+  run  2 / 51 done  (best makespan so far = 169.20)
+  run  3 / 51 done  (best makespan so far = 171.16)
+  run  4 / 51 done  (best makespan so far = 170.13)
+  run  5 / 51 done  (best makespan so far = 169.36)
+  run  6 / 51 done  (best makespan so far = 171.45)
+  run  7 / 51 done  (best makespan so far = 169.98)
+  run  8 / 51 done  (best makespan so far = 168.53)
+  run  9 / 51 done  (best makespan so far = 171.62)
+  run 10 / 51 done  (best makespan so far = 169.22)
+  run 11 / 51 done  (best makespan so far = 169.87)
+  run 12 / 51 done  (best makespan so far = 170.40)
+  run 13 / 51 done  (best makespan so far = 170.32)
+  run 14 / 51 done  (best makespan so far = 169.60)
+  run 15 / 51 done  (best makespan so far = 170.66)
+  run 16 / 51 done  (best makespan so far = 169.13)
+  run 17 / 51 done  (best makespan so far = 169.01)
+  run 18 / 51 done  (best makespan so far = 168.41)
+  run 19 / 51 done  (best makespan so far = 170.63)
+  run 20 / 51 done  (best makespan so far = 169.27)
+  run 21 / 51 done  (best makespan so far = 168.30)
+  run 22 / 51 done  (best makespan so far = 170.81)
+  run 23 / 51 done  (best makespan so far = 167.97)
+  run 24 / 51 done  (best makespan so far = 169.13)
+  run 25 / 51 done  (best makespan so far = 169.48)
+  run 26 / 51 done  (best makespan so far = 168.70)
+  run 27 / 51 done  (best makespan so far = 167.79)
+  run 28 / 51 done  (best makespan so far = 169.51)
+  run 29 / 51 done  (best makespan so far = 170.56)
+  run 30 / 51 done  (best makespan so far = 169.91)
+  run 31 / 51 done  (best makespan so far = 169.90)
+  run 32 / 51 done  (best makespan so far = 169.32)
+  run 33 / 51 done  (best makespan so far = 169.82)
+  run 34 / 51 done  (best makespan so far = 170.83)
+  run 35 / 51 done  (best makespan so far = 170.62)
+  run 36 / 51 done  (best makespan so far = 169.79)
+  run 37 / 51 done  (best makespan so far = 169.74)
+  run 38 / 51 done  (best makespan so far = 169.62)
+  run 39 / 51 done  (best makespan so far = 169.14)
+  run 40 / 51 done  (best makespan so far = 169.50)
+  run 41 / 51 done  (best makespan so far = 169.03)
+  run 42 / 51 done  (best makespan so far = 170.14)
+  run 43 / 51 done  (best makespan so far = 169.63)
+  run 44 / 51 done  (best makespan so far = 168.72)
+  run 45 / 51 done  (best makespan so far = 168.42)
+  run 46 / 51 done  (best makespan so far = 169.71)
+  run 47 / 51 done  (best makespan so far = 170.30)
+  run 48 / 51 done  (best makespan so far = 168.98)
+  run 49 / 51 done  (best makespan so far = 170.03)
+  run 50 / 51 done  (best makespan so far = 168.23)
+  run 51 / 51 done  (best makespan so far = 170.36)
+Optimization done: 48462.9 s
+
+Alg      Best         Median       Mean         Std          AvgRank    p_vs_iPWO 
+iPWO     167.8        171          174.6        9.611        2.588      -         
+PWO      170.4        204.5        217.3        22.18        6.784      <1e-3     
+GWO      168.4        197.5        190.2        15.93        4.569      <1e-3     
+PSO      168.2        171          178          12.43        2.824      0.278     
+DE       169.3        197.6        192.7        10.87        4.843      <1e-3     
+MGO      168.7        171.2        174.4        8.794        2.725      0.359     
+SFOA     169.3        172.4        182.3        13.19        3.667      <1e-3     
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=167.79 s
+  惩罚: cap=0 obs=9.79 conf=0 kin=0
+  各机: load0=[9.57055653494155 7.5915813436277 9.20750173827465 8.28525407808063 5.74863898425616 10.7584166207361]  times=[165.677222996968 166.057683696458 167.117792464541 167.288642618548 164.326937387825 167.789036410308]
+Total elapsed: 48737.2 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+  run  1 / 51 done  (best makespan so far = 236.74)
+  run  2 / 51 done  (best makespan so far = 243.69)
+  run  3 / 51 done  (best makespan so far = 271.09)
+  run  4 / 51 done  (best makespan so far = 251.51)
+  run  5 / 51 done  (best makespan so far = 227.05)
+  run  6 / 51 done  (best makespan so far = 296.72)
+  run  7 / 51 done  (best makespan so far = 298.63)
+  run  8 / 51 done  (best makespan so far = 238.59)
+  run  9 / 51 done  (best makespan so far = 254.52)
+  run 10 / 51 done  (best makespan so far = 239.30)
+  run 11 / 51 done  (best makespan so far = 241.56)
+  run 12 / 51 done  (best makespan so far = 217.08)
+  run 13 / 51 done  (best makespan so far = 217.44)
+  run 14 / 51 done  (best makespan so far = 231.67)
+  run 15 / 51 done  (best makespan so far = 270.64)
+  run 16 / 51 done  (best makespan so far = 308.63)
+  run 17 / 51 done  (best makespan so far = 321.73)
+  run 18 / 51 done  (best makespan so far = 284.99)
+  run 19 / 51 done  (best makespan so far = 345.87)
+  run 20 / 51 done  (best makespan so far = 201.64)
+  run 21 / 51 done  (best makespan so far = 267.05)
+  run 22 / 51 done  (best makespan so far = 356.75)
+  run 23 / 51 done  (best makespan so far = 199.08)
+  run 24 / 51 done  (best makespan so far = 314.14)
+  run 25 / 51 done  (best makespan so far = 274.15)
+  run 26 / 51 done  (best makespan so far = 301.42)
+  run 27 / 51 done  (best makespan so far = 291.06)
+  run 28 / 51 done  (best makespan so far = 202.54)
+  run 29 / 51 done  (best makespan so far = 212.06)
+  run 30 / 51 done  (best makespan so far = 243.17)
+  run 31 / 51 done  (best makespan so far = 213.99)
+  run 32 / 51 done  (best makespan so far = 248.75)
+  run 33 / 51 done  (best makespan so far = 225.15)
+  run 34 / 51 done  (best makespan so far = 265.88)
+  run 35 / 51 done  (best makespan so far = 230.83)
+  run 36 / 51 done  (best makespan so far = 242.99)
+  run 37 / 51 done  (best makespan so far = 267.57)
+  run 38 / 51 done  (best makespan so far = 278.74)
+  run 39 / 51 done  (best makespan so far = 216.87)
+  run 40 / 51 done  (best makespan so far = 318.46)
+  run 41 / 51 done  (best makespan so far = 215.49)
+  run 42 / 51 done  (best makespan so far = 306.74)
+  run 43 / 51 done  (best makespan so far = 220.53)
+  run 44 / 51 done  (best makespan so far = 274.12)
+  run 45 / 51 done  (best makespan so far = 288.88)
+  run 46 / 51 done  (best makespan so far = 350.88)
+  run 47 / 51 done  (best makespan so far = 325.97)
+  run 48 / 51 done  (best makespan so far = 229.93)
+  run 49 / 51 done  (best makespan so far = 250.25)
+  run 50 / 51 done  (best makespan so far = 273.61)
+  run 51 / 51 done  (best makespan so far = 369.83)
+Optimization done: 11864.1 s
+
+Alg      Best         Median       Mean         Std          AvgRank    p_vs_iPWO 
+iPWO     201.6        314.1        327.8        86.96        2.412      -         
+PWO      340.7        931.7        961.3        355.3        6.745      <1e-3     
+GWO      214          396.3        445.2        188.2        3.961      <1e-3     
+PSO      199.1        343.6        355.6        105.2        2.843      0.216     
+DE       227          557          559.9        137.1        5.431      <1e-3     
+MGO      234.5        382          376.6        71.06        3.451      0.00155   
+SFOA     216.9        363.6        367.9        78.1         3.157      0.00853   
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [FAIL] fig9_gantt : 值必须为递增的数值向量。
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 12128.7 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+  run  1 / 51 done  (best makespan so far = 236.74)
+  run  2 / 51 done  (best makespan so far = 243.69)
+  run  3 / 51 done  (best makespan so far = 271.09)
+  run  4 / 51 done  (best makespan so far = 251.51)
+  run  5 / 51 done  (best makespan so far = 227.05)
+  run  6 / 51 done  (best makespan so far = 296.72)
+  run  7 / 51 done  (best makespan so far = 298.63)
+  run  8 / 51 done  (best makespan so far = 238.59)
+  run  9 / 51 done  (best makespan so far = 254.52)
+  run 10 / 51 done  (best makespan so far = 239.30)
+  run 11 / 51 done  (best makespan so far = 241.56)
+  run 12 / 51 done  (best makespan so far = 217.08)
+  run 13 / 51 done  (best makespan so far = 217.44)
+  run 14 / 51 done  (best makespan so far = 231.67)
+  run 15 / 51 done  (best makespan so far = 270.64)
+  run 16 / 51 done  (best makespan so far = 308.63)
+  run 17 / 51 done  (best makespan so far = 321.73)
+  run 18 / 51 done  (best makespan so far = 284.99)
+  run 19 / 51 done  (best makespan so far = 345.87)
+  run 20 / 51 done  (best makespan so far = 201.64)
+  run 21 / 51 done  (best makespan so far = 267.05)
+  run 22 / 51 done  (best makespan so far = 356.75)
+  run 23 / 51 done  (best makespan so far = 199.08)
+  run 24 / 51 done  (best makespan so far = 314.14)
+  run 25 / 51 done  (best makespan so far = 274.15)
+  run 26 / 51 done  (best makespan so far = 301.42)
+  run 27 / 51 done  (best makespan so far = 291.06)
+  run 28 / 51 done  (best makespan so far = 202.54)
+  run 29 / 51 done  (best makespan so far = 212.06)
+  run 30 / 51 done  (best makespan so far = 243.17)
+  run 31 / 51 done  (best makespan so far = 213.99)
+  run 32 / 51 done  (best makespan so far = 248.75)
+  run 33 / 51 done  (best makespan so far = 225.15)
+  run 34 / 51 done  (best makespan so far = 265.88)
+  run 35 / 51 done  (best makespan so far = 230.83)
+  run 36 / 51 done  (best makespan so far = 242.99)
+  run 37 / 51 done  (best makespan so far = 267.57)
+  run 38 / 51 done  (best makespan so far = 278.74)
+  run 39 / 51 done  (best makespan so far = 216.87)
+  run 40 / 51 done  (best makespan so far = 318.46)
+  run 41 / 51 done  (best makespan so far = 215.49)
+  run 42 / 51 done  (best makespan so far = 306.74)
+  run 43 / 51 done  (best makespan so far = 220.53)
+  run 44 / 51 done  (best makespan so far = 274.12)
+  run 45 / 51 done  (best makespan so far = 288.88)
+  run 46 / 51 done  (best makespan so far = 350.88)
+  run 47 / 51 done  (best makespan so far = 325.97)
+  run 48 / 51 done  (best makespan so far = 229.93)
+  run 49 / 51 done  (best makespan so far = 250.25)
+  run 50 / 51 done  (best makespan so far = 273.61)
+  run 51 / 51 done  (best makespan so far = 369.83)
+Optimization done: 11754.5 s
+
+Alg      Best         Median       Mean         Std          AvgRank    p_vs_iPWO 
+iPWO     201.6        314.1        327.8        86.96        2.412      -         
+PWO      340.7        931.7        961.3        355.3        6.745      <1e-3     
+GWO      214          396.3        445.2        188.2        3.961      <1e-3     
+PSO      199.1        343.6        355.6        105.2        2.843      0.216     
+DE       227          557          559.9        137.1        5.431      <1e-3     
+MGO      234.5        382          376.6        71.06        3.451      0.00155   
+SFOA     216.9        363.6        367.9        78.1         3.157      0.00853   
+{错误使用 save
+未找到变量 'C'。
+
+出错 run_uav_delivery (第 162 行)
+save(fullfile(outdir,'delivery_results.mat'),...
+} 
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+  run  1 / 51 done  (best makespan so far = 236.74)
+  run  2 / 51 done  (best makespan so far = 243.69)
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+  run  1 / 51 done  (best makespan so far = 236.74)
+{错误使用 save
+未找到变量 'r_done'。
+
+出错 run_uav_delivery (第 131 行)
+    save(ckpt, 'S','Zall','BestX','r_done','env','algos','runs','pop','MaxFEs','start_r');
+} 
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+  run  1 / 51 done  (best makespan so far = 236.74)
+  run  2 / 51 done  (best makespan so far = 243.69)
+  run  3 / 51 done  (best makespan so far = 271.09)
+  run  4 / 51 done  (best makespan so far = 251.51)
+  run  5 / 51 done  (best makespan so far = 227.05)
+  run  6 / 51 done  (best makespan so far = 296.72)
+  run  7 / 51 done  (best makespan so far = 298.63)
+  run  8 / 51 done  (best makespan so far = 238.59)
+  run  9 / 51 done  (best makespan so far = 254.52)
+  run 10 / 51 done  (best makespan so far = 239.30)
+  run 11 / 51 done  (best makespan so far = 241.56)
+  run 12 / 51 done  (best makespan so far = 217.08)
+  run 13 / 51 done  (best makespan so far = 217.44)
+  run 14 / 51 done  (best makespan so far = 231.67)
+  run 15 / 51 done  (best makespan so far = 270.64)
+  run 16 / 51 done  (best makespan so far = 308.63)
+  run 17 / 51 done  (best makespan so far = 321.73)
+  run 18 / 51 done  (best makespan so far = 284.99)
+  run 19 / 51 done  (best makespan so far = 345.87)
+  run 20 / 51 done  (best makespan so far = 201.64)
+  run 21 / 51 done  (best makespan so far = 267.05)
+  run 22 / 51 done  (best makespan so far = 356.75)
+  run 23 / 51 done  (best makespan so far = 199.08)
+  run 24 / 51 done  (best makespan so far = 314.14)
+  run 25 / 51 done  (best makespan so far = 274.15)
+  run 26 / 51 done  (best makespan so far = 301.42)
+  run 27 / 51 done  (best makespan so far = 291.06)
+  run 28 / 51 done  (best makespan so far = 202.54)
+  run 29 / 51 done  (best makespan so far = 212.06)
+  run 30 / 51 done  (best makespan so far = 243.17)
+  run 31 / 51 done  (best makespan so far = 213.99)
+  run 32 / 51 done  (best makespan so far = 248.75)
+  run 33 / 51 done  (best makespan so far = 225.15)
+  run 34 / 51 done  (best makespan so far = 265.88)
+  run 35 / 51 done  (best makespan so far = 230.83)
+  run 36 / 51 done  (best makespan so far = 242.99)
+  run 37 / 51 done  (best makespan so far = 267.57)
+  run 38 / 51 done  (best makespan so far = 278.74)
+  run 39 / 51 done  (best makespan so far = 216.87)
+  run 40 / 51 done  (best makespan so far = 318.46)
+  run 41 / 51 done  (best makespan so far = 215.49)
+  run 42 / 51 done  (best makespan so far = 306.74)
+  run 43 / 51 done  (best makespan so far = 220.53)
+  run 44 / 51 done  (best makespan so far = 274.12)
+  run 45 / 51 done  (best makespan so far = 288.88)
+  run 46 / 51 done  (best makespan so far = 350.88)
+  run 47 / 51 done  (best makespan so far = 325.97)
+  run 48 / 51 done  (best makespan so far = 229.93)
+  run 49 / 51 done  (best makespan so far = 250.25)
+  run 50 / 51 done  (best makespan so far = 273.61)
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+RESUME: 已完成 50/51 runs，从 run 51 继续
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+RESUME: 已完成 50/51 runs，从 run 51 继续
+  run 51 / 51 done  (best makespan so far = 369.83)
+Optimization done: 258.9 s
+
+Alg      Best         Median       Mean         Std          AvgRank    p_vs_iPWO 
+iPWO     201.6        314.1        327.8        86.96        2.412      -         
+PWO      340.7        931.7        961.3        355.3        6.745      <1e-3     
+GWO      214          396.3        445.2        188.2        3.961      <1e-3     
+PSO      199.1        343.6        355.6        105.2        2.843      0.216     
+DE       227          557          559.9        137.1        5.431      <1e-3     
+MGO      234.5        382          376.6        71.06        3.451      0.00155   
+SFOA     216.9        363.6        367.9        78.1         3.157      0.00853   
+
+Generating figures...
+  [FAIL] fig1_scene : 此类型的变量不支持使用点进行索引。
+  [FAIL] fig2_paths : 此类型的变量不支持使用点进行索引。
+  [FAIL] fig3_load : 此类型的变量不支持使用点进行索引。
+  [OK] fig4_conv
+  [OK] fig5_box
+  [FAIL] fig6_conflict : 此类型的变量不支持使用点进行索引。
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [FAIL] fig9_gantt : 此类型的变量不支持使用点进行索引。
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+  [WARN] export_scene_json failed: 此类型的变量不支持使用点进行索引。
+Total elapsed: 507.2 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [FAIL] fig1_scene : 此类型的变量不支持使用点进行索引。
+  [FAIL] fig2_paths : 此类型的变量不支持使用点进行索引。
+  [FAIL] fig3_load : 此类型的变量不支持使用点进行索引。
+  [OK] fig4_conv
+  [OK] fig5_box
+  [FAIL] fig6_conflict : 此类型的变量不支持使用点进行索引。
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [FAIL] fig9_gantt : 此类型的变量不支持使用点进行索引。
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+{函数或变量 'ckpt' 无法识别。
+
+出错 run_uav_delivery (第 227 行)
+if exist(ckpt,'file'), delete(ckpt); end   % 清理续跑检查点
+} 
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+  [WARN] export_scene_json failed: 此类型的变量不支持使用点进行索引。
+{函数或变量 't0' 无法识别。
+
+出错 run_uav_delivery (第 240 行)
+fprintf('Total elapsed: %.1f s\n', toc(t0));
+} 
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+  [WARN] export_scene_json failed: 此类型的变量不支持使用点进行索引。
+Total elapsed: 492.0 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 421.7 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 365.0 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 351.1 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 359.2 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 348.9 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 383.7 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 344.4 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 280.1 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 285.4 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 335.5 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 360.7 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 405.1 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 401.0 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 345.2 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 345.0 s
+
+========== UAV Delivery Joint Optimization ==========
+Scenario: Nu=6, Nc=30, Q=10.0kg, V=15.0m/s, d_min=6m, TW=on (hw=31s, w=2.0)
+Pads: [59.9 59.9 0;46.4 63.5 0;36.5 53.6 0;40.1 40.1 0;53.6 36.5 0;63.5 46.4 0]
+Dim D=30, Pop=30, MaxFEs=8000, Runs=51
+
+
+[REDRAW] loading saved results from data/delivery_results.mat ...
+
+Generating figures...
+  [OK] fig1_scene
+  [OK] fig2_paths
+  [OK] fig3_load
+  [OK] fig4_conv
+  [OK] fig5_box
+  [OK] fig6_conflict
+  [OK] fig7_table
+  [OK] fig8_sensitivity
+  [OK] fig9_gantt
+All figures saved to: D:\File\GPTTest\CEC2017_Experiment\iPWO_Reproducible\uav_delivery_TIFF_MATLAB\figs
+Data saved to:      D:\File\GPTTest\CEC2017_Experiment\iPWO_Reproducible\uav_delivery_TIFF_MATLAB\data
+已导出场景+最优解: D:\File\GPTTest\CEC2017_Experiment\iPWO_Reproducible\uav_delivery_TIFF_MATLAB\data\scene_and_solution.json
+  客户数=30  无人机数=6  makespan=196.82 s
+  惩罚: cap=0 obs=10.6 conf=0 kin=0.625
+  各机: load0=[9.88452540516653 9.61150931896022 8.41159810100433 9.65772808757496 7.01620924916007 6.58037913805068]  times=[167.258594122746 170.158411338777 167.752108545115 175.666222014759 173.174539062837 196.819993070182]
+Total elapsed: 284.5 s
