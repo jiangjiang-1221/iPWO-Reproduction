@@ -1,5 +1,5 @@
-CEC2017 跨函数汇总
-参与函数数: 29 / 30
+CEC2017 cross-function summary
+Functions included: 29 / 30
 Friedman p = 2.085004e-39
 
 Algorithm	Mean	Std	Median	SE	AvgRank	Win	Tie	Loss
