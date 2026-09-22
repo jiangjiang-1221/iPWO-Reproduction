@@ -1,26 +1,26 @@
-CEC2017 复现数据 vs 原文件夹 一致性核查报告
+CEC2017 reproduction data vs original folder consistency check report
 ================================================
-核查时间: 2026-08-31
-方法: 对 Dim10/30/50 三个复现文件夹的 data/ 与其原始 CEC2017Dim{N}/ 做逐项比对
+Check time: 2026-08-31
+Method: per-item comparison of data/ in the Dim10/30/50 reproduction folders against their original CEC2017Dim{N}/
 
-结论: 全部 PASS (数据与原实验数据在浮点精度内完全一致)
+Conclusion: all PASS (data identical to original experiment data within floating-point precision)
 
-逐项结果:
-  [Dim 10] PASS (0 问题)  - 29 Best_Values 字节级一致; 29 Avg_Convergence 仅 SFOA 首行修正
-  [Dim 30] PASS (0 问题)  - 同上
-  [Dim 50] PASS (0 问题)  - 同上 (nfe=16668, x轴 0..16667)
+Item-by-item results:
+  [Dim 10] PASS (0 issues)  - 29 Best_Values byte-identical; 29 Avg_Convergence only SFOA first row corrected
+  [Dim 30] PASS (0 issues)  - same as above
+  [Dim 50] PASS (0 issues)  - same as above (nfe=16668, x-axis 0..16667)
 
-图文件完整性:
-  Dim10:  58 张 (29 箱线图 + 29 收敛图)  0 错误
-  Dim30:  58 张 (29 箱线图 + 29 收敛图)  0 错误
-  Dim50:  58 张 (29 箱线图 + 29 收敛图)  0 错误
+Figure file integrity:
+  Dim10:  58 figures (29 boxplots + 29 convergence plots)  0 errors
+  Dim30:  58 figures (29 boxplots + 29 convergence plots)  0 errors
+  Dim50:  58 figures (29 boxplots + 29 convergence plots)  0 errors
 
-关键说明:
-  1. Best_Values.xlsx: 复现 data/ 与原文件夹逐字节相同 (未做任何修改)。
-  2. Avg_Convergence.xlsx: 复现 data/ 与原文件夹唯一实质差异是 SFOA 列(第3列)首行
-     由 0 修正为原文件同表第2行值 (等价于 SFOA.m 的 curve(1)=curve(2) 修复)。
-     其余所有单元格与原文件差异 <= 5.7e-6 (绝对), 经对照实验证实为 openpyxl
-     重写 xlsx 的浮点序列化表示差异 (非数据改动), 对绘图不可见。
-  3. SFOA 修正正确性: 29 个函数复现首行值 == 原文件第2行值 (已验证)。
-  4. nfe/x轴: Dim10=3335, Dim30=10001, Dim50=16668 (数据驱动, 0..nfe-1)。
-  5. 箱线图数据源 Best_Values 与原文件夹完全一致 (逐值验证, 无 MISMATCH)。
+Key notes:
+  1. Best_Values.xlsx: reproduction data/ byte-identical to original folder (no modifications made).
+  2. Avg_Convergence.xlsx: the only substantive difference between the reproduction data/ and
+     corrected from 0 to the value of the 2nd row of the same table in the original file (equivalent to the SFOA.m curve(1)=curve(2) fix).
+     all other cells differ from the original file by <= 5.7e-6 (absolute), confirmed by control experiments to be openpyxl
+     xlsx floating-point serialization representation differences from rewriting (not data changes), invisible to plotting.
+  3. SFOA correction correctness: 29 functions' reproduction first-row values == original file's 2nd row values (verified).
+  4. nfe/x-axis: Dim10=3335, Dim30=10001, Dim50=16668 (data-driven, 0..nfe-1).
+  5. Boxplot data source Best_Values identical to original folder (verified value by value, no MISMATCH).
