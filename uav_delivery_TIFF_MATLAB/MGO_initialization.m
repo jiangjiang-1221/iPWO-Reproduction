@@ -1,4 +1,4 @@
-% This function initialize the first population of search agents
+% Initial population of search agents
 function Positions=MGO_initialization(SearchAgents_no,dim,ub,lb)
 
 Boundary_no= size(ub,2); % number of boundaries

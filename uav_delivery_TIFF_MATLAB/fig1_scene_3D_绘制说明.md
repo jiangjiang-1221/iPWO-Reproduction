@@ -1,47 +1,47 @@
-# fig1_scene —— 3D 配送场景图 · 完整重绘说明
+# fig1_scene -- 3D delivery scenario figure · full redraw notes
 
-> 目标文件：`figs/fig1_scene.tif`（3795×2640 px @330 DPI，画布 11.5×8 英寸，1150×800 px）
-> 数据来源：`data/scene_and_solution.json`（所有坐标均由此导出，未做任何取舍）
-> 字体标准（2026-09-05 更新）：Times New Roman；标题/坐标轴/图例 28pt；仓库标签 12pt；起降坪标签 12pt（放射外推 10 m、高度逐个错开，不遮挡场景）；无俯视子图
+> target file: figs/fig1_scene.tif (3795×2640 px @330 DPI, canvas 11.5×8 inch, 1150×800 px)
+> data source: data/scene_and_solution.json (all coordinates exported from it, nothing dropped)
+> font standard (2026-09-05 update): Times New Roman; title/axis/legend 28pt; depot label 12pt; launch-pad label 12pt (radial extrapolation 10 m, staggered heights, no scene occlusion); no top-view subplot
 
-## 1. 画布与全局设置
+## 1. Canvas and global settings
 
-| 项目 | 值 |
+| item | value |
 |---|---|
-| 图窗 | 白底，1150×800 px（position [150 150 1150 800]） |
-| 打印 | PaperSize 11.5×8 in，`-dtiffn -r330` → 3795×2640 px |
-| 字体 | Times New Roman（全局） |
-| 字号 | 标题 28pt 加粗；3D 轴刻度/标签 28pt；图例 28pt；仓库文字 12pt 加粗；P 标签 12pt 加粗 |
+| figure window | white background, 1150×800 px (position [150 150 1150 800]) |
+| print | PaperSize 11.5×8 in, -dtiffn -r330 -> 3795×2640 px |
+| font | Times New Roman (global) |
+| font size | title 28pt bold; 3D axis ticks/labels 28pt; legend 28pt; depot text 12pt bold; P label 12pt bold |
 
-## 2. 3D 主坐标系
+## 2. 3D main coordinate system
 
-- x/y/z 轴范围：**[0,100] / [0,100] / [0,60]**，轴标签 `x (m)`、`y (m)`、`z (m)`
-- DataAspectRatio = **[1, 1, 0.6]**（z 方向压扁 0.6 倍）
-- 视角：**view(-60°, 25°)**（方位角 -60°，仰角 25°）；grid on、box on
+- x/y/z axis range: **[0,100] / [0,100] / [0,60]**, axis labels x (m), y (m), z (m)
+- DataAspectRatio = **[1, 1, 0.6]** (z squeezed by 0.6)
+- view: **view(-60°, 25°)** (azimuth -60°, elevation 25°); grid on, box on
 
-## 3. 无人机配色（全图统一色键）
+## 3. UAV color map (uniform color key for whole figure)
 
-| UAV | RGB (0-1) | HEX | 中文 |
+| UAV | RGB (0-1) | HEX | color |
 |---|---|---|---|
-| UAV-1 | [0.122 0.467 0.706] | #1F77B4 | 蓝 |
-| UAV-2 | [1.000 0.498 0.055] | #FF7F0E | 橙 |
-| UAV-3 | [0.173 0.627 0.173] | #2CA02C | 绿 |
-| UAV-4 | [0.839 0.153 0.157] | #D62728 | 红 |
-| UAV-5 | [0.580 0.400 0.750] | #9466BF | 紫 |
-| UAV-6 | [0.200 0.600 0.700] | #3399B2 | 青 |
+| UAV-1 | [0.122 0.467 0.706] | #1F77B4 | blue |
+| UAV-2 | [1.000 0.498 0.055] | #FF7F0E | orange |
+| UAV-3 | [0.173 0.627 0.173] | #2CA02C | green |
+| UAV-4 | [0.839 0.153 0.157] | #D62728 | red |
+| UAV-5 | [0.580 0.400 0.750] | #9466BF | purple |
+| UAV-6 | [0.200 0.600 0.700] | #3399B2 | cyan |
 
-## 4. 仓库（Warehouse）
+## 4. Depot (Warehouse)
 
-- 中心 **(50, 50, 0)**；立方体底面 10×10（x: 45→55, y: 45→55），**高 12**（z: 0→12）
-- 颜色紫蓝 `[0.42 0.36 0.80]`，FaceAlpha 0.9，白色棱边（LineWidth 1）
-- 文字标签 `Warehouse`：位于 **(50, 50, 15)**（立方体顶上方，避免与起降坪标签重叠），水平居中，黑色 `[0.1 0.1 0.1]`，12pt 加粗，白色背景（透明度 0.7）
+- center **(50, 50, 0)**; cube base 10×10 (x: 45→55, y: 45→55), **height 12** (z: 0→12)
+- color purple-blue [0.42 0.36 0.80], FaceAlpha 0.9, white edges (LineWidth 1)
+- text label Warehouse: at (50, 50, 15) (above cube top, avoiding overlap with launch-pad labels), horizontally centered, black [0.1 0.1 0.1], 12pt bold, white background (opacity 0.7)
 
-## 5. 起降坪 P1–P6（地面方形平台）
+## 5. Launch pads P1-P6 (ground square platforms)
 
-- 尺寸：边长 **7 m**（中心 ±3.5），厚 0.5 m（z: 0→0.5）；颜色 = 对应无人机色，FaceAlpha 0.9，黑色棱边（LineWidth 1.2）
-- 文字标签 `P1`…`P6`：从各自起降坪中心沿**远离仓库的放射方向外推 10 m**，高度逐个错开（P1 z=20、P4 z=15、P6 z=6、其余 z=10），水平居中，12pt 加粗，颜色 = 对应无人机色（不遮挡场景）
+- size: side 7 m (center ±3.5), thickness 0.5 m (z: 0→0.5); color = corresponding UAV color, FaceAlpha 0.9, black edges (LineWidth 1.2)
+- text labels P1...P6: extrapolated 10 m outward from each pad center along the radial direction away from the depot, staggered heights (P1 z=20, P4 z=15, P6 z=6, others z=10), horizontally centered, 12pt bold, color = corresponding UAV color (no scene occlusion)
 
-| 起降坪 | x (m) | y (m) | z (m) |
+| launch pad | x (m) | y (m) | z (m) |
 |---|---|---|---|
 | P1 | 59.90 | 59.90 | 0 |
 | P2 | 46.38 | 63.52 | 0 |
@@ -50,17 +50,17 @@
 | P5 | 53.62 | 36.48 | 0 |
 | P6 | 63.52 | 46.38 | 0 |
 
-## 6. 巡航点与无人机模型
+## 6. Cruise points and UAV model
 
-- 每架无人机的巡航点 **cruise point = 起降坪正上方 z = 35 m**（巡航高度 CRUISE=35）
-- **垂直爬升线已按需求删除**（2026-09-05：场景图不含任何配送路线/爬升线元素）
-- 每个巡航点上画一个**四旋翼无人机实体模型**（臂长 3.2 m）：
-  - 机身：实心圆点（MarkerSize 160，黑描边 1.4）
-  - 4 条机臂：从机身中心指向对角线方向（±45°），长 3.2 m，LineWidth 2.6
-  - 4 个旋翼环：半径 1.76 m（臂长×0.55），26 边形，LineWidth 1.8
-  - 4 个旋翼毂：小实心点（MarkerSize 50）
+- each UAV cruise point = 35 m above its launch pad (cruise altitude CRUISE=35)
+- vertical climb lines removed as requested (2026-09-05: the scenario figure contains no delivery routes / climb-line elements)
+- draw a quadrotor UAV solid model at each cruise point (arm length 3.2 m):
+  - body: solid dot (MarkerSize 160, black outline 1.4)
+  - 4 arms: from body center toward diagonal directions (±45°), length 3.2 m, LineWidth 2.6
+  - 4 rotor rings: radius 1.76 m (arm length × 0.55), 26-gon, LineWidth 1.8
+  - 4 rotor hubs: small solid dots (MarkerSize 50)
 
-| UAV | 巡航点 (x, y, z) |
+| UAV | cruise point (x, y, z) |
 |---|---|
 | UAV-1 | (59.90, 59.90, 35) |
 | UAV-2 | (46.38, 63.52, 35) |
@@ -69,99 +69,99 @@
 | UAV-5 | (53.62, 36.48, 35) |
 | UAV-6 | (63.52, 46.38, 35) |
 
-## 7. 障碍物（灰色半透明，不可进入）
+## 7. Obstacles (gray, semi-transparent, no entry)
 
-- 圆柱：灰色 `[0.5 0.5 0.5]`，FaceAlpha 0.35，无描边（40 边细分成面）
-- 球体：同色同透明度（24 面细分）
+- cylinder: gray [0.5 0.5 0.5], FaceAlpha 0.35, no outline (40-sided subdivision)
+- sphere: same color and opacity (24-face subdivision)
 
-| 类型 | 参数 [x, y, 半径r, 高h/z心] | 几何范围 |
+| type | params [x, y, radius r, height h / z-center] | geometric range |
 |---|---|---|
-| 圆柱 | [30.00, 30.00, r=7, h=40] | x∈[23.00,37.00], y∈[23.00,37.00], z∈[0,40] |
-| 圆柱 | [70.00, 70.00, r=7, h=40] | x∈[63.00,77.00], y∈[63.00,77.00], z∈[0,40] |
-| 圆柱 | [50.00, 20.00, r=6, h=35] | x∈[44.00,56.00], y∈[14.00,26.00], z∈[0,35] |
-| 球体 | [35.00, 60.00, z心=25, r=7] | 球心 (35.00, 60.00, 25)，半径 7 |
-| 球体 | [65.00, 35.00, z心=25, r=7] | 球心 (65.00, 35.00, 25)，半径 7 |
+| cylinder | [30.00, 30.00, r=7, h=40] | x∈[23.00,37.00], y∈[23.00,37.00], z∈[0,40] |
+| cylinder | [70.00, 70.00, r=7, h=40] | x∈[63.00,77.00], y∈[63.00,77.00], z∈[0,40] |
+| cylinder | [50.00, 20.00, r=6, h=35] | x∈[44.00,56.00], y∈[14.00,26.00], z∈[0,35] |
+| sphere | [35.00, 60.00, z-center=25, r=7] | sphere center (35.00, 60.00, 25), radius 7 |
+| sphere | [65.00, 35.00, z-center=25, r=7] | sphere center (65.00, 35.00, 25), radius 7 |
 
-## 8. 30 个客户（地面球体，颜色 = 分配的无人机）
+## 8. 30 customers (ground spheres, color = assigned UAV)
 
-- 球心 = 客户坐标 (x, y, 0)；半径 = **0.8 + 1.4×(包裹重量−0.5)/2.5**（重量 0.5–3.0 kg → 半径 0.8–2.2 m）
-- 颜色 = 该客户被分配到的无人机色，FaceAlpha 0.95，无描边；**不绘制逐点文字标签**（避免 30 个标签重叠；分配关系由颜色编码表达）
+- sphere center = customer coordinate (x, y, 0); radius = 0.8 + 1.4×(package weight − 0.5)/2.5 (weight 0.5-3.0 kg -> radius 0.8-2.2 m)
+- color = the UAV color assigned to that customer, FaceAlpha 0.95, no outline; no per-point text labels (avoids 30-label overlap; assignment shown by color encoding)
 
-| # | x (m) | y (m) | 重量 (kg) | 半径 (m) | 分配 | 颜色 |
+| # | x (m) | y (m) | weight (kg) | radius (m) | assign | color |
 |---|---|---|---|---|---|---|
-| C1 | 38.71 | 59.68 | 1.472 | 1.344 | UAV-3 | 绿 #2CA02C |
-| C2 | 90.56 | 20.35 | 1.178 | 1.180 | UAV-2 | 橙 #FF7F0E |
-| C3 | 70.88 | 10.85 | 2.572 | 1.960 | UAV-2 | 橙 #FF7F0E |
-| C4 | 58.88 | 90.40 | 1.392 | 1.299 | UAV-1 | 蓝 #1F77B4 |
-| C5 | 19.04 | 91.91 | 1.202 | 1.193 | UAV-1 | 蓝 #1F77B4 |
-| C6 | 19.04 | 77.76 | 1.857 | 1.560 | UAV-2 | 橙 #FF7F0E |
-| C7 | 10.23 | 32.42 | 0.852 | 0.997 | UAV-6 | 青 #3399B2 |
-| C8 | 82.96 | 13.79 | 2.505 | 1.923 | UAV-5 | 紫 #9466BF |
-| C9 | 59.10 | 66.58 | 0.686 | 0.904 | UAV-5 | 紫 #9466BF |
-| C10 | 68.73 | 44.61 | 2.967 | 2.182 | UAV-4 | 红 #D62728 |
-| C11 | 6.85 | 15.98 | 2.431 | 1.881 | UAV-3 | 绿 #2CA02C |
-| C12 | 92.29 | 49.57 | 0.997 | 1.078 | UAV-4 | 红 #D62728 |
-| C13 | 79.92 | 8.09 | 0.514 | 0.808 | UAV-3 | 绿 #2CA02C |
-| C14 | 24.11 | 86.84 | 2.539 | 1.942 | UAV-1 | 蓝 #1F77B4 |
-| C15 | 21.36 | 28.29 | 2.267 | 1.790 | UAV-6 | 青 #3399B2 |
-| C16 | 21.51 | 64.63 | 2.323 | 1.821 | UAV-4 | 红 #D62728 |
-| C17 | 32.38 | 33.05 | 2.428 | 1.880 | UAV-5 | 紫 #9466BF |
-| C18 | 52.23 | 51.81 | 0.685 | 0.904 | UAV-6 | 青 #3399B2 |
-| C19 | 43.88 | 54.20 | 1.396 | 1.302 | UAV-5 | 紫 #9466BF |
-| C20 | 31.21 | 21.64 | 0.790 | 0.962 | UAV-6 | 青 #3399B2 |
-| C21 | 60.07 | 92.26 | 2.658 | 2.008 | UAV-1 | 蓝 #1F77B4 |
-| C22 | 17.55 | 74.76 | 2.058 | 1.673 | UAV-4 | 红 #D62728 |
-| C23 | 31.29 | 89.55 | 1.327 | 1.263 | UAV-6 | 青 #3399B2 |
-| C24 | 37.97 | 85.53 | 0.659 | 0.889 | UAV-6 | 青 #3399B2 |
-| C25 | 46.05 | 58.81 | 1.277 | 1.235 | UAV-3 | 绿 #2CA02C |
-| C26 | 75.67 | 87.97 | 1.313 | 1.255 | UAV-4 | 红 #D62728 |
-| C27 | 22.97 | 12.96 | 2.324 | 1.821 | UAV-2 | 橙 #FF7F0E |
-| C28 | 51.28 | 22.64 | 2.094 | 1.693 | UAV-1 | 蓝 #1F77B4 |
-| C29 | 58.32 | 9.07 | 2.718 | 2.042 | UAV-3 | 绿 #2CA02C |
-| C30 | 9.18 | 34.28 | 1.681 | 1.461 | UAV-2 | 橙 #FF7F0E |
+| C1 | 38.71 | 59.68 | 1.472 | 1.344 | UAV-3 | green #2CA02C |
+| C2 | 90.56 | 20.35 | 1.178 | 1.180 | UAV-2 | orange #FF7F0E |
+| C3 | 70.88 | 10.85 | 2.572 | 1.960 | UAV-2 | orange #FF7F0E |
+| C4 | 58.88 | 90.40 | 1.392 | 1.299 | UAV-1 | blue #1F77B4 |
+| C5 | 19.04 | 91.91 | 1.202 | 1.193 | UAV-1 | blue #1F77B4 |
+| C6 | 19.04 | 77.76 | 1.857 | 1.560 | UAV-2 | orange #FF7F0E |
+| C7 | 10.23 | 32.42 | 0.852 | 0.997 | UAV-6 | cyan #3399B2 |
+| C8 | 82.96 | 13.79 | 2.505 | 1.923 | UAV-5 | purple #9466BF |
+| C9 | 59.10 | 66.58 | 0.686 | 0.904 | UAV-5 | purple #9466BF |
+| C10 | 68.73 | 44.61 | 2.967 | 2.182 | UAV-4 | red #D62728 |
+| C11 | 6.85 | 15.98 | 2.431 | 1.881 | UAV-3 | green #2CA02C |
+| C12 | 92.29 | 49.57 | 0.997 | 1.078 | UAV-4 | red #D62728 |
+| C13 | 79.92 | 8.09 | 0.514 | 0.808 | UAV-3 | green #2CA02C |
+| C14 | 24.11 | 86.84 | 2.539 | 1.942 | UAV-1 | blue #1F77B4 |
+| C15 | 21.36 | 28.29 | 2.267 | 1.790 | UAV-6 | cyan #3399B2 |
+| C16 | 21.51 | 64.63 | 2.323 | 1.821 | UAV-4 | red #D62728 |
+| C17 | 32.38 | 33.05 | 2.428 | 1.880 | UAV-5 | purple #9466BF |
+| C18 | 52.23 | 51.81 | 0.685 | 0.904 | UAV-6 | cyan #3399B2 |
+| C19 | 43.88 | 54.20 | 1.396 | 1.302 | UAV-5 | purple #9466BF |
+| C20 | 31.21 | 21.64 | 0.790 | 0.962 | UAV-6 | cyan #3399B2 |
+| C21 | 60.07 | 92.26 | 2.658 | 2.008 | UAV-1 | blue #1F77B4 |
+| C22 | 17.55 | 74.76 | 2.058 | 1.673 | UAV-4 | red #D62728 |
+| C23 | 31.29 | 89.55 | 1.327 | 1.263 | UAV-6 | cyan #3399B2 |
+| C24 | 37.97 | 85.53 | 0.659 | 0.889 | UAV-6 | cyan #3399B2 |
+| C25 | 46.05 | 58.81 | 1.277 | 1.235 | UAV-3 | green #2CA02C |
+| C26 | 75.67 | 87.97 | 1.313 | 1.255 | UAV-4 | red #D62728 |
+| C27 | 22.97 | 12.96 | 2.324 | 1.821 | UAV-2 | orange #FF7F0E |
+| C28 | 51.28 | 22.64 | 2.094 | 1.693 | UAV-1 | blue #1F77B4 |
+| C29 | 58.32 | 9.07 | 2.718 | 2.042 | UAV-3 | green #2CA02C |
+| C30 | 9.18 | 34.28 | 1.681 | 1.461 | UAV-2 | orange #FF7F0E |
 
-## 9. 图例（3D 轴右侧外部 eastoutside，28pt，图标 MarkerSize 300）
+## 9. Legend (outside 3D axis eastoutside, 28pt, icon MarkerSize 300)
 
-| 图例项 | 标记 |
+| legend item | marker |
 |---|---|
-| Warehouse | 紫蓝色方块（同仓库色） |
-| Obstacle | 灰色圆点 |
-| Customer | 白底黑边空心圆点（客户统一一条图例；客户球体颜色 = 分配无人机） |
-| UAV-1 | 蓝色圆点 |
-| UAV-2 | 橙色圆点 |
-| UAV-3 | 绿色圆点 |
-| UAV-4 | 红色圆点 |
-| UAV-5 | 紫色圆点 |
-| UAV-6 | 青色圆点 |
-| Launch pad | 灰色方块 |
+| Warehouse | purple-blue square (same as depot color) |
+| Obstacle | gray dot |
+| Customer | hollow dot with white fill and black edge (one legend entry for all customers; customer sphere color = assigned UAV) |
+| UAV-1 | blue dot |
+| UAV-2 | orange dot |
+| UAV-3 | green dot |
+| UAV-4 | red dot |
+| UAV-5 | purple dot |
+| UAV-6 | cyan dot |
+| Launch pad | gray square |
 
-## 10. 标题
+## 10. Title
 
-`3D Delivery Scenario (Nu=6 UAVs, Nc=30 customers, Q=10 kg)` —— 28pt 加粗，居中
+`3D Delivery Scenario (Nu=6 UAVs, Nc=30 customers, Q=10 kg)` -- 28pt bold, centered
 
-## 11. 俯视 inset 子图（已按需求移除）
+## 11. Top-view inset subplot (removed as requested)
 
-- 2026-09-05 起右下角 2D 俯视子图已删除，保证 3D 坐标轴完整可见、不被遮挡；
-- 客户-无人机分配关系由客户球体颜色编码表达（对照第 8 节颜色表）。
+- since 2026-09-05 the bottom-right 2D top-view subplot is deleted, keeping the 3D axis fully visible and unoccluded;
+- customer-UAV assignment is encoded by customer sphere color (see color table in section 8).
 
-## 12. 附：最优解航线数据（fig2_paths 使用，供自绘扩展）
+## 12. Appendix: best-solution route data (used by fig2_paths, for custom-draw extension)
 
-- makespan = **196.82 s**，总航程 L_total = **1576.21 m**
-- 惩罚项：cap=0, obs=10.580, conf=0, kin=0.625
+- makespan = **196.82 s**, total distance L_total = **1576.21 m**
+- penalty term: cap=0, obs=10.580, conf=0, kin=0.625
 
-- **UAV-1** 服务序列：C5 → C22 → C6 → C15 → C29
-- **UAV-2** 服务序列：C7 → C31 → C28 → C4 → C3
-- **UAV-3** 服务序列：C2 → C26 → C14 → C30 → C12
-- **UAV-4** 服务序列：C17 → C23 → C27 → C13 → C11
-- **UAV-5** 服务序列：C9 → C10 → C20 → C18
-- **UAV-6** 服务序列：C19 → C25 → C24 → C8 → C16 → C21
+- **UAV-1** service sequence: C5 → C22 → C6 → C15 → C29
+- **UAV-2** service sequence: C7 → C31 → C28 → C4 → C3
+- **UAV-3** service sequence: C2 → C26 → C14 → C30 → C12
+- **UAV-4** service sequence: C17 → C23 → C27 → C13 → C11
+- **UAV-5** service sequence: C9 → C10 → C20 → C18
+- **UAV-6** service sequence: C19 → C25 → C24 → C8 → C16 → C21
 
-每条航线航点（先垂直爬升到 z=35，沿巡航高度飞行，最后垂直降落）：
+Waypoints of each route (first climb vertically to z=35, fly at cruise altitude, then descend vertically):
 
 
-**UAV-1 航点列表**：
+**UAV-1 waypoint list**:
 
-| 序 | x | y | z |
+| idx | x | y | z |
 |---|---|---|---|
 | 1 | 59.90 | 59.90 | 0.00 |
 | 2 | 59.90 | 59.90 | 35.00 |
@@ -173,9 +173,9 @@
 | 8 | 59.90 | 59.90 | 35.00 |
 | 9 | 59.90 | 59.90 | 0.00 |
 
-**UAV-2 航点列表**：
+**UAV-2 waypoint list**:
 
-| 序 | x | y | z |
+| idx | x | y | z |
 |---|---|---|---|
 | 1 | 46.38 | 63.52 | 0.00 |
 | 2 | 46.38 | 63.52 | 35.00 |
@@ -187,9 +187,9 @@
 | 8 | 46.38 | 63.52 | 35.00 |
 | 9 | 46.38 | 63.52 | 0.00 |
 
-**UAV-3 航点列表**：
+**UAV-3 waypoint list**:
 
-| 序 | x | y | z |
+| idx | x | y | z |
 |---|---|---|---|
 | 1 | 36.48 | 53.62 | 0.00 |
 | 2 | 36.48 | 53.62 | 35.00 |
@@ -201,9 +201,9 @@
 | 8 | 36.48 | 53.62 | 35.00 |
 | 9 | 36.48 | 53.62 | 0.00 |
 
-**UAV-4 航点列表**：
+**UAV-4 waypoint list**:
 
-| 序 | x | y | z |
+| idx | x | y | z |
 |---|---|---|---|
 | 1 | 40.10 | 40.10 | 0.00 |
 | 2 | 40.10 | 40.10 | 35.00 |
@@ -215,9 +215,9 @@
 | 8 | 40.10 | 40.10 | 35.00 |
 | 9 | 40.10 | 40.10 | 0.00 |
 
-**UAV-5 航点列表**：
+**UAV-5 waypoint list**:
 
-| 序 | x | y | z |
+| idx | x | y | z |
 |---|---|---|---|
 | 1 | 53.62 | 36.48 | 0.00 |
 | 2 | 53.62 | 36.48 | 35.00 |
@@ -228,9 +228,9 @@
 | 7 | 53.62 | 36.48 | 35.00 |
 | 8 | 53.62 | 36.48 | 0.00 |
 
-**UAV-6 航点列表**：
+**UAV-6 waypoint list**:
 
-| 序 | x | y | z |
+| idx | x | y | z |
 |---|---|---|---|
 | 1 | 63.52 | 46.38 | 0.00 |
 | 2 | 63.52 | 46.38 | 35.00 |
@@ -245,36 +245,36 @@
 
 ---
 
-# 附：fig2_paths —— 3D 航线图 · 重绘说明（同属 3D 图）
+# Appendix: fig2_paths -- 3D route figure · redraw notes (also a 3D figure)
 
-> 画布/视角/坐标轴/基础对象与 fig1_scene **完全相同**（第 1–7 节、第 9–11 节直接复用），
-> 在其基础上增加航线与投递元素、去掉客户球体。标题改为两行 28pt 加粗：
+> canvas / view / axes / base objects are **identical** to fig1_scene (sections 1-7, 9-11 reused directly),
+> with route and delivery elements added and customer spheres removed. Title changed to two lines 28pt bold:
 > `Optimal Task Assignment and 3D Paths` + `(IPWO, Makespan=196.8s)`
 
-## A1. 与 fig1_scene 的差异总览
+## A1. Difference overview vs fig1_scene
 
-| 元素 | fig1_scene | fig2_paths |
+| element | fig1_scene | fig2_paths |
 |---|---|---|
-| 客户表示 | 大球体（半径∝重量，FaceAlpha 0.95） | **小实心圆点**（MarkerSize 60，黑描边） |
-| 客户垂线 | 无 | **灰色细点线**（见 A3） |
-| 航线 | 无 | **6 条彩色折线**（见 A2） |
-| 仓库/起降坪/无人机模型/障碍物/图例 | 有 | 完全相同 |
-| 俯视 inset 子图 | 有 | 无 |
+| customer representation | large sphere (radius ∝ weight, FaceAlpha 0.95) | **small solid dot** (MarkerSize 60, black outline) |
+| customer vertical line | none | **gray dotted line** (see A3) |
+| route | none | **6 colored polylines** (see A2) |
+| depot / launch pad / UAV model / obstacle / legend | yes | identical |
+| top-view inset subplot | yes | none |
 
-## A2. 6 条航线（彩色折线）
+## A2. 6 routes (colored polylines)
 
-- 每条航线 = 该 UAV 航点表（见第 12 节）顺序相连的 **3D 折线**，颜色 = 对应无人机色，**LineWidth 2.6**
-- 折线起点/终点 = 起降坪 (z=0)，先垂直爬升至 z=35，沿途水平飞行，最后垂直降落
+- each route = the 3D polyline connecting that UAV's waypoint table (section 12) in order, color = corresponding UAV color, LineWidth 2.6
+- polyline start/end = launch pad (z=0), first climb vertically to z=35, fly horizontally, then descend vertically
 
-## A3. 客户投递点与悬停垂线（30 组）
+## A3. Customer delivery points and hover vertical lines (30 groups)
 
-- **投递落点**：客户坐标 (x, y, 0) 处实心小圆点（MarkerSize 60），填充色 = 分配无人机色，黑色描边
-- **悬停垂线**：从客户地面点 (x, y, 0) 垂直向上画到巡航高度 (x, y, 35)：
-  灰色 `[0.30 0.30 0.30]` 点线（':'），LineWidth 1.0 —— 表示无人机在巡航高度悬停投送
+- delivery drop point: solid small dot at customer coordinate (x, y, 0) (MarkerSize 60), fill color = assigned UAV color, black outline
+- hover vertical line: drawn vertically upward from customer ground point (x, y, 0) to cruise altitude (x, y, 35):
+  gray [0.30 0.30 0.30] dotted line (':'), LineWidth 1.0 -- indicates UAV hovering at cruise altitude for delivery
 
-## A4. 逐客户垂线坐标（x=y=客户坐标，z 从 0 到 35）
+## A4. Per-customer vertical-line coordinates (x=y=customer coordinate, z from 0 to 35)
 
-| # | x (m) | y (m) | 垂线 z 范围 |
+| # | x (m) | y (m) | vertical-line z range |
 |---|---|---|---|
 | C1 | 38.71 | 59.68 | 0 → 35 |
 | C2 | 90.56 | 20.35 | 0 → 35 |

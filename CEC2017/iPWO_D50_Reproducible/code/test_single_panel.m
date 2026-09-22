@@ -1,4 +1,4 @@
-%% test_single_panel.m  单函数试跑: 校验版面规格是否精确落地
+%% test_single_panel.m  single-function trial: verify layout spec is precisely applied
 clear; clc; close all;
 
 codeDir = fileparts(mfilename('fullpath'));
@@ -26,11 +26,11 @@ opts.benchLabel = 'CEC2017';
 opts.landscapeCacheDir = cacheDir;
 opts.reproDataDir = reproDir;
 
-fprintf('试跑 F%d (Dim=%d)\n', testF, dim);
+fprintf('trial run F%d (Dim=%d)\n', testF, dim);
 iPWO_build_figures(testF, dim, lb, ub, fobj, ...
     r.best_run, r.avg_best_curve, r.avg_fit_curve, r.Max_iter, outDir, opts);
 
-fprintf('\n--- 导出结果自检 ---\n');
+fprintf('\n--- export result self-check ---\n');
 d = dir(fullfile(outDir, '*.tif'));
 for i = 1:numel(d)
     info = imfinfo(fullfile(outDir, d(i).name));
@@ -40,4 +40,4 @@ for i = 1:numel(d)
 end
 
 fs = dir(fullfile(outDir, 'fig', '*.fig'));
-fprintf('\n.fig 源文件: %d 个\n', numel(fs));
+fprintf('\n.fig sources: %d\n', numel(fs));

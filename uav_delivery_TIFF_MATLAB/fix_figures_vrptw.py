@@ -1,11 +1,11 @@
-# 硬编码权威映射重嵌 Fig.5-8（修复 update 脚本的 caption 启发式错位），
-# 并微调统计段 best_clause 措辞。文档先自动备份。
+# re-embed Fig.5-8 with the hardcoded authoritative mapping (fix the caption misalignment from the update script's heuristic),
+# and fine-tune the wording of the statistics paragraph best_clause. Back up the document first.
 import os, re, glob, shutil, datetime
 from docx import Document
 from docx.shared import Inches
 from PIL import Image
 
-DOCX = r"C:/Users/江文/Desktop/cn-20260826-review.docx"
+DOCX = r"C:/Users/JiangWen/Desktop/cn-20260826-review.docx"
 PKG  = r"D:/File/GPTTest/uav_delivery/uav_delivery_TIFF_MATLAB"
 FIGS = os.path.join(PKG, "figs")
 
@@ -25,7 +25,7 @@ def tif_to_png(tif_path, max_w=1800):
     im.save(out, "PNG", optimize=True)
     return out
 
-# ---------- 1) 修正统计段 best_clause ----------
+# ---------- 1) fix statistics paragraph best_clause ----------
 d = Document(DOCX)
 def find_para(sub):
     for i, p in enumerate(d.paragraphs):
@@ -33,24 +33,24 @@ def find_para(sub):
             return i
     return None
 
-i111 = find_para("51 次独立运行的统计指标显示")
+i111 = find_para("statistics of 51 independent runs show")
 if i111 is not None:
-    old = ("iPWO 的 Z 最优值为 201.64 s（全场最低为 PSO 的 199.08 s）")
-    new = ("iPWO 在 Median（314.14 s）、Mean（327.80 s）与 Avg.Rank（2.41，全场最优）上均居首位，"
-           "单次最优 Best（201.64 s）与 PSO（199.08 s）基本持平（二者差异不显著，p=0.22）")
+    old = ("iPWO best Z is 201.64 s (the overall lowest is PSO's 199.08 s)")
+    new = ("iPWO ranks first in Median (314.14 s), Mean (327.80 s) and Avg.Rank (2.41, best overall),"
+           "single-run best (201.64 s) is on par with PSO (199.08 s) (difference not significant, p=0.22)")
     if old in d.paragraphs[i111].text:
         d.paragraphs[i111].text = d.paragraphs[i111].text.replace(old, new)
         print("  fixed best_clause in para", i111)
     else:
-        print("  (best_clause 文本未匹配，跳过文本修正)")
+        print("  (best_clause text not matched, skipping text fix)")
 
-# ---------- 2) 硬编码重嵌 Fig.5-8 ----------
+# ---------- 2) hardcode re-embed Fig.5-8 ----------
 rels = d.part.rels
 MAP = {
-    "rId96": "fig1_scene.tif",        # Fig.5 场景
-    "rId97": "fig4_convergence.tif",  # Fig.6 收敛
-    "rId98": "fig5_boxplot.tif",      # Fig.7 箱线
-    "rId99": "fig6_conflict.tif",     # Fig.8 冲突
+    "rId96": "fig1_scene.tif",        # Fig.5 scene
+    "rId97": "fig4_convergence.tif",  # Fig.6 convergence
+    "rId98": "fig5_boxplot.tif",      # Fig.7 boxplot
+    "rId99": "fig6_conflict.tif",     # Fig.8 conflict
 }
 for rid, tif in MAP.items():
     tifp = os.path.join(FIGS, tif)

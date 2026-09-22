@@ -1,34 +1,34 @@
 function [f, diag] = uav_delivery_cost(X, env)
-% UAV_DELIVERY_COST  联合目标函数：Makespan + 约束惩罚
-%   X  : n×D 或 1×D 决策矩阵（支持向量化）
-%   env: 场景结构体
-%   f  : 标量目标值列向量 (n×1)
-%   diag: 诊断信息结构体（仅当输入为单行且成功时返回）
+% UAV_DELIVERY_COST  joint objective: makespan + constraint penalty term
+%   X  : n×D or 1×D decision matrix (vectorized)
+%   env: scenario struct
+%   f  : scalar objective column vector (n×1)
+%   diag: diagnostic struct (returned only for single-row successful input)
 %
-% 鲁棒性：对每个候选解单独 try-catch；任何异常（如退化/奇异 X）
-% 返回大惩罚值 1e6（视为不可行）并保存坏 X 到 badX.mat 供诊断，
-% 保证优化算法不会因个别坏解而整体中断。
+% robustness: per-candidate-solution try-catch; any exception (e.g. degenerate/singular X)
+% returns a large penalty 1e6 (treated as infeasible) and saves the bad X to badX.mat for diagnosis,
+% so the optimizer is never interrupted by a single bad solution.
 
 n = size(X, 1);
 f = zeros(n, 1);
 diag = struct();
 
-% 可行性优先：所有约束违反乘以一个大常数 PENW，使“违反约束的解”目标值
-% 远超任何可行解（makespan 量级 ~ 数百秒）。算法因此优先消除约束违反；
-% 一旦种群全部可行，目标值退化为 makespan，算法转而真正最小化完工时间。
+% feasibility first: all constraint violations times a large constant PENW, so constraint-violating
+% solutions score far above any feasible one (makespan ~ hundreds of seconds). The algorithm thus removes
+% violations first; once the whole population is feasible the objective reduces to makespan and the algorithm minimizes completion time.
 PENW = 100;
 
 for k = 1:n
     try
         R = decode_delivery(X(k,:), env);
 
-        L_total = 0;              % 总航程（所有机）
-        times    = zeros(env.Nu, 1);  % 各机完成时间
-        pen_cap  = 0;             % 容量惩罚
-        pen_obs  = 0;             % 障碍惩罚
-        pen_conf = 0;             % 冲突惩罚
-        pen_kin  = 0;             % 运动学惩罚
-        pen_energy = 0;           % 能量超限惩罚（电池约束）
+        L_total = 0;              % total flight distance (all UAVs)
+        times    = zeros(env.Nu, 1);  % per-UAV completion time
+        pen_cap  = 0;             % capacity penalty
+        pen_obs  = 0;             % obstacle penalty
+        pen_conf = 0;             % conflict penalty
+        pen_kin  = 0;             % kinematic penalty
+        pen_energy = 0;           % energy-exceeded penalty (battery constraint)
 
         for u = 1:env.Nu
             nodes = R.routes{u};
@@ -36,30 +36,30 @@ for k = 1:n
 
             seg = diff(nodes, 1, 1);
             slen = sqrt(sum(seg.^2, 2));
-            Lu = sum(slen);                    % 该机总航程
+            Lu = sum(slen);                    % this UAV total distance
             L_total = L_total + Lu;
 
             nc_u = R.nCust(u);
             times(u) = Lu/env.V + nc_u * env.TS;
 
-            % ---- 容量约束 ----
+            % ---- capacity constraint ----
             if R.load0(u) > env.Q
                 pen_cap = pen_cap + (R.load0(u) - env.Q)^2;
             end
 
-            % ---- 障碍惩罚（沿航段采样）----
+            % ---- obstacle penalty (sample along segments)----
             pen_obs = pen_obs + obs_penalty(nodes, env);
 
-            % ---- 运动学约束 ----
+            % ---- kinematic constraint ----
             climb = asind(abs(seg(:,3)) ./ max(slen, 1e-9));
             pen_kin = pen_kin + sum(max(0, climb - env.MAX_CLIMB).^2);
             pen_kin = pen_kin + sum(max(0, env.MIN_SEG - slen).^2);
 
-            % ---- 电池/续航约束 ----
+            % ---- battery / endurance constraint ----
             if isfield(env, 'E_max') && env.E_max > 0
-                E_cruise  = env.e_cruise * Lu;                          % 巡航基础能耗
-                E_hover   = env.e_hover * nc_u * env.TS;               % 悬停投递能耗
-                E_payload = env.e_payload * R.load0(u) * Lu;           % 载重附加能耗
+                E_cruise  = env.e_cruise * Lu;                          % cruise base energy
+                E_hover   = env.e_hover * nc_u * env.TS;               % hover delivery energy
+                E_payload = env.e_payload * R.load0(u) * Lu;           % payload extra energy
                 E_used    = E_cruise + E_hover + E_payload;
                 if E_used > env.E_max
                     pen_energy = pen_energy + (E_used - env.E_max)^2;
@@ -67,10 +67,10 @@ for k = 1:n
             end
         end
 
-        % ---- Makespan 目标 ----
+        % ---- makespan objective ----
         makespan = max(times);
 
-        % ---- 冲突检测（离散航点）----
+        % ---- conflict detection (discrete waypoints)----
         K = env.K;
         Pts = cell(env.Nu, 1);
         for u = 1:env.Nu
@@ -85,9 +85,9 @@ for k = 1:n
 
         f(k) = makespan + PENW * (pen_cap + pen_obs + pen_conf + pen_kin + pen_energy);
 
-        % 仅单行时记录诊断信息（供绘图用）
-        % 注意：数组字段必须用 {} 包成单值，否则 struct() 会广播成
-        % 结构体数组，导致外层 d.R.assign 变成“逗号列表+点索引”报错。
+        % record diagnostics only for single-row input (for plotting)
+        % note: array fields must be wrapped in {} as single values, otherwise struct() broadcasts them
+        % into a struct array, making outer d.R.assign a "comma list + dot index" error.
         if n == 1
             diag = struct('makespan', makespan, 'times', {times}, ...
                           'load0', {R.load0}, 'routes', {R.routes}, ...
@@ -99,7 +99,7 @@ for k = 1:n
         end
 
     catch ME
-        % 个别坏解不应中断整体优化：记大惩罚并保存坏 X 供诊断
+        % a single bad solution must not interrupt the whole optimization: record a large penalty and save bad X for diagnosis
         try save('badX.mat','X','env','ME'); catch, end  %#ok<*TRYNC>
         f(k) = 1e6;
     end
@@ -107,11 +107,11 @@ end
 end
 
 
-%% ==================== 子函数 ====================
+%% ==================== subfunctions ====================
 
 function pen = obs_penalty(nodes, env)
-% 沿航段采样，计算障碍穿透惩罚
-ns = 5;  % 每段采样点数
+% sample along segments and compute obstacle penetration penalty
+ns = 5;  % sample points per segment
 pts = [];
 for i = 1:size(nodes,1)-1
     tt = linspace(0,1,ns+1)';
@@ -123,7 +123,7 @@ for i = 1:size(nodes,1)-1
     end
 end
 pen = 0;
-% 圆柱
+% cylinder
 for o = 1:size(env.cyl,1)
     c = env.cyl(o,:);
     dx = pts(:,1)-c(1); dy = pts(:,2)-c(2);
@@ -131,14 +131,14 @@ for o = 1:size(env.cyl,1)
     inside = (pts(:,3) < c(4)) & (dxy < c(3));
     pen = pen + sum(max(0, c(3)-dxy).^2 .* inside);
 end
-% 球体
+% sphere
 for o = 1:size(env.sph,1)
     c = env.sph(o,:);
     d3 = sqrt(sum((pts - c(1:3)).^2, 2));
     inside = d3 < c(4);
     pen = pen + sum(max(0, c(4)-d3).^2 .* inside);
 end
-% 棱柱
+% prism
 for o = 1:size(env.prism,1)
     b = env.prism(o,:);
     inside = (pts(:,1)>=b(1))&(pts(:,1)<=b(2))&...
@@ -150,11 +150,11 @@ end
 
 
 function Pt = resample_route(nodes, K)
-% 将航迹等弧长重采样为 K 个点（对退化/重复节点做保护）
+% resample trajectory to K points at equal arc length (guard against degenerate/duplicate nodes)
     if size(nodes,1) < 2
         Pt = repmat(nodes(1,:), K, 1); return;
     end
-    % 去掉连续重复节点，保证弧长严格递增（interp1 要求单调唯一 x）
+    % drop consecutive duplicate nodes to keep arc length strictly increasing (interp1 needs monotonic unique x)
     keep = [true; any(diff(nodes,1,1) ~= 0, 2)];
     nodes = nodes(keep,:);
     if size(nodes,1) < 2

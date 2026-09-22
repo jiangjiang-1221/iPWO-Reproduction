@@ -1,7 +1,7 @@
 function validate_mean_conv()
-% VALIDATE_MEAN_CONV  小预算校验均值收敛图的 Z 记录机制
-%   复刻 run_uav_delivery.m 中 fobj_z + Zall + mean 逻辑（仅 2 算法），
-%   确认：1) 不报错；2) G_ZRUN 正常记录；3) 跨 runs 均值可算；4) iPWO 末端 Z 更低。
+% VALIDATE_MEAN_CONV  verify Z-trace mechanism of the mean convergence figure under a small budget
+%   replicate the fobj_z + Zall + mean logic from run_uav_delivery.m (2 algorithms only),
+%   checks: 1) no error; 2) G_ZRUN recorded; 3) cross-run mean computable; 4) iPWO final Z lower.
 script_dir = fileparts(mfilename('fullpath'));
 if isempty(script_dir), script_dir = pwd; end
 cd(script_dir); addpath(script_dir);

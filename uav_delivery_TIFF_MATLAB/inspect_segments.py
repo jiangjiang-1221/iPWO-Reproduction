@@ -1,6 +1,6 @@
 from docx import Document
 from docx.oxml.ns import qn
-DOCX = r"C:/Users/江文/Desktop/cn-20260826-review.docx"
+DOCX = r"C:/Users/JiangWen/Desktop/cn-20260826-review.docx"
 d = Document(DOCX)
 for i, p in enumerate(d.paragraphs):
     if 104 <= i <= 145:

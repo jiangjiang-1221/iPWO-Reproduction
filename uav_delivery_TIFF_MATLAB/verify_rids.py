@@ -2,7 +2,7 @@ import os, hashlib
 from docx import Document
 from PIL import Image
 
-DOCX = r"C:/Users/江文/Desktop/cn-20260826-review.docx"
+DOCX = r"C:/Users/USER/Desktop/cn-20260826-review.docx"
 PKG  = r"D:/File/GPTTest/uav_delivery/uav_delivery_TIFF_MATLAB"
 FIGS = os.path.join(PKG, "figs")
 
@@ -21,11 +21,11 @@ for name in ["fig1_scene","fig4_convergence","fig5_boxplot","fig6_conflict","fig
     tif_sha[name] = (sha(open(png,"rb").read()), png)
 
 d = Document(DOCX)
-print("rId -> 匹配到的图")
+print("rId -> matched figure")
 for rid, rel in d.part.rels.items():
     if "image" in rel.reltype:
         b = rel.target_part.blob
         m = [n for n, (s, _) in tif_sha.items() if s == sha(b)]
         print(f"  {rid}: {m if m else '??? (sha='+sha(b)+')'}")
-print("\nfig 文件 sha 前缀:")
+print("\nfig file sha prefix:")
 for n,(s,_) in tif_sha.items(): print(f"  {n}: {s}")

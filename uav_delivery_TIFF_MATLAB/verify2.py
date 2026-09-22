@@ -2,7 +2,7 @@ import os, hashlib
 from docx import Document
 from PIL import Image
 
-DOCX = r"C:/Users/江文/Desktop/cn-20260826-review.docx"
+DOCX = r"C:/Users/USER/Desktop/cn-20260826-review.docx"
 PKG  = r"D:/File/GPTTest/uav_delivery/uav_delivery_TIFF_MATLAB"
 FIGS = os.path.join(PKG, "figs")
 
@@ -21,7 +21,7 @@ for name in ["fig1_scene","fig4_convergence","fig5_boxplot","fig6_conflict","fig
     tif_sha[name] = sha(open(png,"rb").read())
 
 d = Document(DOCX)
-print("=== 特检 rId96-99 ===")
+print("=== special check rId96-99 ===")
 for rid in ["rId96","rId97","rId98","rId99"]:
     if rid in d.part.rels:
         rel = d.part.rels[rid]
@@ -30,11 +30,11 @@ for rid in ["rId96","rId97","rId98","rId99"]:
             m = [n for n,s in tif_sha.items() if s == sha(b)]
             print(f"  {rid}: IMAGE -> {m if m else '??? '+sha(b)}")
         else:
-            print(f"  {rid}: 非image ({rel.reltype})")
+            print(f"  {rid}: non-image ({rel.reltype})")
     else:
-        print(f"  {rid}: 不存在")
+        print(f"  {rid}: not present")
 
-print("\n=== 全部 image 关系（按 rid 排序）===")
+print("\n=== all image relations (sorted by rid) ===")
 imgs = []
 for rid, rel in d.part.rels.items():
     if "image" in rel.reltype:

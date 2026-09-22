@@ -1,17 +1,17 @@
 %% reproduce_figures_from_data.m
-%  仅使用 data/repro 下的复现数据重新生成单独面板 TIFF,
-%  不依赖 CEC2017 mex 目标函数, 保证"数据即可复现图片"。
+%  regenerate individual panel TIFFs from reproduction data under data/repro only,
+%  no dependency on CEC2017 mex objective function; "data reproduces figures".
 %
-%  ===== 版面规格 =====
-%    A4(21.0x29.7cm), 上下边距 2.54cm, 左右边距 3.18cm
-%    => 正文宽度 14.64cm, 一行放 5 张 => 每张 2.928cm 见方
-%    => 600 DPI => 692x692 px, 导出物理字号 9pt
-%    => 不再生成五联图; 每个面板另存 .fig 源文件
+%  ===== layout spec =====
+%    A4 (21.0x29.7 cm), top/bottom margin 2.54 cm, left/right margin 3.18 cm
+%    => text width 14.64 cm, 5 panels per row => each 2.928 cm square
+%    => 600 DPI => 692x692 px, exported physical font size 9 pt
+%    => no five-panel figure; each panel also saved as .fig source
 %
-%  注意: 复现数据中的旧 figSpecs(330 DPI / 18pt) 已被下方新规格覆盖,
-%        与本文件夹当前的出版规格保持一致。
+%  note: old figSpecs (330 DPI / 18 pt) in reproduction data overridden by new spec below,
+%        consistent with current publication spec of this folder.
 %
-%  运行方式: 将本文件所在目录(code/)加入 MATLAB 路径后直接运行本脚本。
+%  usage: add this file's directory (code/) to the MATLAB path, then run this script.
 
 clear; clc; close all;
 
@@ -20,12 +20,12 @@ rootDir = fullfile(codeDir, '..');
 reproDir= fullfile(rootDir, 'data', 'repro');
 figDir  = fullfile(rootDir, 'figures', 'from_repro_data');
 
-if ~exist(reproDir, 'dir'), error('缺少复现数据目录: %s', reproDir); end
+if ~exist(reproDir, 'dir'), error('Missing reproduction data directory: %s', reproDir); end
 if ~exist(figDir, 'dir'), mkdir(figDir); end
 
 files = dir(fullfile(reproDir, 'CEC2017_F*_iPWO_ReproData.mat'));
 if isempty(files)
-    error('未找到任何复现数据文件: %s', reproDir);
+    error('No reproduction data file found: %s', reproDir);
 end
 
 for k = 1:numel(files)
@@ -37,7 +37,7 @@ for k = 1:numel(files)
     best_run = struct('score', d.best_score, 'pos', d.best_pos, ...
         'curve', d.best_curve, 'history', [], 'time', NaN);
 
-    % 论文出版规格(覆盖复现数据中的旧规格)
+    % paper publication spec (overrides old spec in reproduction data)
     opts.dpi = 600;
     opts.fontSize = 9;
     opts.panelCm = 2.928;
@@ -53,14 +53,14 @@ for k = 1:numel(files)
     opts.searchXY = double(d.searchXY);
     opts.searchIter = double(d.searchIter);
     opts.historyOK = d.historyOK;
-    % 复现数据已存在, 不再重复写出; 指向源目录防止生成冗余副本
+    % reproduction data already exists; not rewritten; point to source dir to avoid redundant copies
     opts.reproDataDir = reproDir;
     opts.landscapeCacheDir = fullfile(rootDir, 'data', 'landscape_cache');
 
-    fprintf('\n========== 由数据复现 F%d (Dim=%d) ==========\n', d.Function_name, d.dim);
+    fprintf('\n========== reproducing F%d (Dim=%d) from data ==========\n', d.Function_name, d.dim);
     iPWO_build_figures(d.Function_name, d.dim, d.lb(:)', d.ub(:)', [], ...
         best_run, d.avg_best_curve, d.avg_fit_curve, d.Lcurve, figDir, opts);
 end
 
-fprintf('\n✅ 全部完成 -> %s\n', figDir);
-fprintf('   规格: 2.928cm 见方 | 600 DPI | 导出字号 9pt | 一行可放 5 张\n');
+fprintf('\nDone -> %s\n', figDir);
+fprintf('   spec: 2.928 cm square | 600 DPI | exported font size 9 pt | 5 per row\n');

@@ -1,4 +1,4 @@
-% 独立重绘 fig9_gantt（修复 YTick 非递增报错，无需重跑全量实验）
+% independently redraw fig9_gantt (fix YTick non-monotonic error, no full re-run needed)
 matpath = 'D:/File/GPTTest/uav_delivery/uav_delivery_TIFF_MATLAB/data/delivery_results.mat';
 load(matpath);
 FS = 18;
@@ -12,7 +12,7 @@ for u = 1:env.Nu
     seq = best_diag.R.cust_seq{u};
     arr = best_diag.arr{u};
     if isempty(seq), continue; end
-    yy = (env.Nu - u);                 % UAV-1 在顶
+    yy = (env.Nu - u);                 % UAV-1 on top
     for k = 1:numel(seq)
         j = seq(k);
         e = env.tw(j,1); l = env.tw(j,2);
@@ -26,7 +26,7 @@ for u = 1:env.Nu
 end
 xlabel(ax,'Time  t (s)','FontSize', FS);
 ylabel(ax,'UAV index','FontSize', FS);
-yt = 0:(env.Nu-1);                      % 必须递增
+yt = 0:(env.Nu-1);                      % must be increasing
 set(ax,'YTick',yt,'YTickLabel',arrayfun(@(x)sprintf('UAV-%d',env.Nu-x),yt,'UniformOutput',false));
 xlim(ax,[0 max(maxT,1)*1.05]);
 title(ax,'Time-Window Feasibility Gantt (best IPWO solution)', ...

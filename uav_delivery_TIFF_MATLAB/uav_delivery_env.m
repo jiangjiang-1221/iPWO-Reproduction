@@ -1,70 +1,70 @@
 function env = uav_delivery_env(nuav, dmin)
-% UAV_DELIVERY_ENV  多无人机多包裹配送场景生成器（可复现，固定种子）
-%   nuav : 无人机数量（默认 4）
-%   dmin : 最小安全距离 m（默认 6）
-%   返回 env 结构体：场景参数、障碍、lb/ub/D、解码参数等。
+% UAV_DELIVERY_ENV  multi-UAV multi-package delivery scenario generator (reproducible, fixed seed)
+%   nuav : number of UAVs (default 4)
+%   dmin : minimum safety distance m (default 6)
+%   returns env struct: scenario parameters, obstacles, lb/ub/D, decode parameters, etc.
 %
-% 用法：
-%   env = uav_delivery_env();           % 默认 4 机 / d_min=6
-%   env = uav_delivery_env(6, 8);       % 6 机 / d_min=8（敏感性分析用）
+% usage:
+%   env = uav_delivery_env();           % default 4 UAVs / d_min=6
+%   env = uav_delivery_env(6, 8);       % 6 UAVs / d_min=8 (for sensitivity analysis)
 
 if nargin < 1 || isempty(nuav), nuav = 4; end
 if nargin < 2 || isempty(dmin), dmin = 6; end
 
-rng(42);  % 固定种子保证可复现
+rng(42);  % fixed seed for reproducibility
 
-%% === 基础参数 ===
+%% === base parameters ===
 env.Nu    = nuav;
-env.Nc    = 30;                         % 客户数 / 包裹数（工程实例：30 客户）
-env.Q     = 10.0;                       % 单机最大载重 kg（收紧至会偶尔越界，使容量约束真正生效）
-env.V     = 15.0;                       % 巡航速度 m/s
-env.TS    = 30.0;                       % 单次投递服务时间 s
-env.dmin  = dmin;                       % 最小安全距离 m
-env.CRUISE = 35.0;                      % 巡航高度 m
-env.MAX_CLIMB = 90;                     % 最大爬升角 deg（多旋翼可垂直起降，故放宽至 90）
-env.MIN_SEG   = 3;                      % 最小航段长 m
-env.F     = 0;                          % 自由航点已废弃：几何路由改由 2-opt 精确求解
-env.K     = 60;                         % 冲突检测采样点数（弧长等距）
+env.Nc    = 30;                         % number of customers / packages (engineering instance: 30 customers)
+env.Q     = 10.0;                       % max per-UAV capacity kg (tightened so it occasionally violates, making the capacity constraint actually active)
+env.V     = 15.0;                       % cruise speed m/s
+env.TS    = 30.0;                       % single delivery service time s
+env.dmin  = dmin;                       % minimum safety distance m
+env.CRUISE = 35.0;                      % cruise altitude m
+env.MAX_CLIMB = 90;                     % max climb angle deg (multirotor can take off vertically, so relaxed to 90)
+env.MIN_SEG   = 3;                      % minimum segment length m
+env.F     = 0;                          % free waypoints removed: geometric routing now solved exactly by 2-opt
+env.K     = 60;                         % conflict-detection sample count (equal arc length)
 
-%% === 电池/续航约束 ===
-env.E_max   = 160;                     % 单机电池容量 Wh（调到使约束真正生效：均衡分配~135Wh可行，过度集中会超限）
-env.e_cruise = 0.15;                   % 巡航功耗系数 Wh/m
-env.e_hover = 0.08;                    % 悬停功耗系数 Wh/s（投递时悬停）
-env.e_payload = 0.005;                 % 载重附加功耗 Wh/(kg·m)
-env.wEnergy = 8000;                    % 能量超限惩罚权重（与 wObs/wConf 同量级）
+%% === battery / endurance constraints ===
+env.E_max   = 160;                     % per-UAV battery capacity Wh (tuned so the constraint is actually active: balanced assignment ~135Wh feasible, over-concentration exceeds)
+env.e_cruise = 0.15;                   % cruise power coefficient Wh/m
+env.e_hover = 0.08;                    % hover power coefficient Wh/s (during delivery)
+env.e_payload = 0.005;                 % payload extra power Wh/(kg·m)
+env.wEnergy = 8000;                    % energy-excess penalty weight (same order as wObs/wConf)
 
-%% === 仓库（配送中心）+ 多起降坪 ===
-% 单仓库（建筑中心 O），但每架无人机有自己独立的起降坪，围绕仓库中心均布。
-% 这样各机从/回到不同位置，消除“所有机挤在同一点、路线都回到同一最高/最低点”的问题。
-env.depot = [50, 50, 0];                 % 配送中心地面坐标（仓库建筑中心）
-Rpad = 14;                              % 起降坪距仓库中心半径
+%% === depot (distribution center) + multiple launch pads ===
+% single depot (building center O), but each UAV has its own launch pad, evenly distributed around the depot.
+% this removes the "all UAVs crowd one point, all routes return to the same highest/lowest point" issue.
+env.depot = [50, 50, 0];                 % depot ground coordinates (building center)
+Rpad = 14;                              % launch-pad radius around depot center
 env.pads = zeros(env.Nu, 3);
 env.cruise_pts = zeros(env.Nu, 3);
 for u = 1:env.Nu
-    ang = pi/4 + 2*pi*(u-1)/env.Nu;     % 围绕中心均布，起始 45°
+    ang = pi/4 + 2*pi*(u-1)/env.Nu;     % evenly distributed around center, starting at 45deg
     px = env.depot(1) + Rpad*cos(ang);
     py = env.depot(2) + Rpad*sin(ang);
-    env.pads(u,:)       = [px, py, 0];            % 地面起降坪
-    env.cruise_pts(u,:) = [px, py, env.CRUISE];   % 该坪对应的巡航高度悬停点
+    env.pads(u,:)       = [px, py, 0];            % ground launch pad
+    env.cruise_pts(u,:) = [px, py, env.CRUISE];   % cruise-altitude hover point above that pad
 end
 
-%% === 客户（位置 + 包裹重量）===
-pos = rand(env.Nc, 2) .* 90 + 5;        % x,y ∈ [5,95]
-env.customers = [pos, zeros(env.Nc, 1)]; % z=0 地面交付
-env.weights   = rand(env.Nc, 1) * 2.5 + 0.5;  % w_j ∈ [0.5, 3.0] kg
+%% === customers (position + package weight) ===
+pos = rand(env.Nc, 2) .* 90 + 5;        % x,y in [5,95]
+env.customers = [pos, zeros(env.Nc, 1)]; % z=0 ground delivery
+env.weights   = rand(env.Nc, 1) * 2.5 + 0.5;  % w_j in [0.5, 3.0] kg
 
-%% === 时间窗（VRPTW，中等难度档位，窗口锚定到一个天然可行访问计划）===
-% 思路：先构造一个“参考可行分配”（按客户相对仓库的极角轮转分给各机），
-% 用其无等待到达时刻作为每客户时间窗中心；半宽 H 控制难度。
-% 这样保证至少存在一组可行解（迟到≈0），约束真正生效但“不会全不可行”，
-% 算法需在“分配 + 访问顺序”上权衡，制造崎岖的可行性地形以凸显搜索智能差异。
+%% === time windows (VRPTW, medium difficulty; window anchored to a naturally feasible visit plan) ===
+% idea: first build a "reference feasible assignment" (assign customers to UAVs by rotating polar angle
+% around the depot), using its wait-free arrival times as each customer's window center; half-width H controls difficulty.
+% this guarantees at least one feasible solution exists (lateness ~ 0), so the constraint is truly active but
+% "not all infeasible"; the algorithm must trade off "assignment + visit order", creating a rugged feasibility landscape that highlights differences in search intelligence.
 [~, ord] = sort(atan2(env.customers(:,2)-env.depot(2), ...
                       env.customers(:,1)-env.depot(1)));
 assign_ref = zeros(env.Nc, 1);
 for k = 1:env.Nc
     assign_ref(ord(k)) = mod(k-1, env.Nu) + 1;
 end
-Xref = (assign_ref - 0.5) / env.Nu;     % 映射回 [0,1] 连续编码
+Xref = (assign_ref - 0.5) / env.Nu;     % map back to [0,1] continuous encoding
 Rref = decode_delivery(Xref, env);
 arr_ref = zeros(env.Nc, 1);
 for u = 1:env.Nu
@@ -82,30 +82,30 @@ for u = 1:env.Nu
         prev = nodes(idx,:);
     end
 end
-H = 60;                                 % 时间窗半宽（s）；越小越难（先放宽保证可行解可达）
+H = 60;                                 % time-window half-width (s); smaller = harder (first relaxed to guarantee a feasible solution is reachable)
 env.tw   = [max(0, arr_ref - H), arr_ref + H];
-env.tw_w = 2.0;                         % 迟到惩罚权重（秒级，与 makespan 同量级）
+env.tw_w = 2.0;                         % lateness penalty weight (seconds scale, same order as makespan)
 
-%% === 障碍物（圆柱 + 球体）===
+%% === obstacles (cylinders + spheres) ===
 env.cyl = [30 30 7 40;                 % [x y radius height]
           70 70 7 40;
           50 20 6 35];
 env.sph = [35 60 25 7;                % [x y z radius]
           65 35 25 7];
-env.prism = [];                        % 无棱柱障碍
+env.prism = [];                        % no prism obstacle
 env.threat = [];
 
-%% === 编码维度与边界（工程改进：只保留“分配”维度）===
-% 编码: [assign(Nc)]  —— 仅决定“谁服务哪个客户”；
-%       每机内部的访问顺序与几何路径由 decode 中的 2-opt 精确求解，
-%       不再浪费维度在几乎无用的自由航点上（原 ~120 个死维度已删除）。
-env.D = env.Nc;                        % 决策维度 = 客户数（全部有意义）
+%% === encoding dimension and bounds (engineering improvement: keep only the "assignment" dimension) ===
+% encoding: [assign(Nc)]  -- only decides "who serves which customer";
+%   the intra-UAV visit order and geometric path are solved exactly by 2-opt inside decode,
+%   no more wasted dimensions on nearly useless free waypoints (the original ~120 dead dimensions removed).
+env.D = env.Nc;                        % decision dimension = number of customers (all meaningful)
 env.lb = zeros(1, env.D);
-env.ub = ones(1, env.D);               % assign 在 [0,1]
+env.ub = ones(1, env.D);               % assign in [0,1]
 
-%% === 惩罚权重（需调参使各项量级可比）===
-env.wCap   = 100;                      % 容量超限惩罚
-env.wObs   = 5000;                     % 障碍穿透惩罚
-env.wConf  = 2000;                     % 冲突惩罚
-env.wKin   = 50;                       % 运动学惩罚
+%% === penalty weights (tuned so the terms are comparable in magnitude) ===
+env.wCap   = 100;                      % capacity-excess penalty
+env.wObs   = 5000;                     % obstacle-penetration penalty
+env.wConf  = 2000;                     % conflict penalty
+env.wKin   = 50;                       % kinematic penalty
 end

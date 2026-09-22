@@ -85,7 +85,7 @@ function run_scaling_iPWO(funcs, dims, runs, pop, tag, useParallel)
         writetable(T, fullfile(outdir, sprintf('summary_scaling_D%d.csv', dim)));
     end
 
-    % ---- 维度可扩展性图（中位数目标，跨函数均值，iPWO vs PWO）----
+    % ---- dimensional scalability plot (median objective, mean across functions, iPWO vs PWO)----
     meanMed = squeeze(mean(medAll, 1));     % nVar x nDims
     save(fullfile(outdir, 'scaling_summary.mat'), 'dims', 'funcs', 'variants', 'meanMed');
     Tsum = array2table(meanMed', 'VariableNames', variants);
@@ -100,10 +100,10 @@ function run_scaling_iPWO(funcs, dims, runs, pop, tag, useParallel)
     grid on;
     xlabel('Dimension D (log)');
     ylabel('Median objective (log, lower is better)');
-    % 标题原为单行, 27pt 下太宽、向左伸到 y 轴刻度标签上方,
-    % 与顶部 10^10 的指数部分相撞; 拆两行后宽度减半。
+    % title was originally one line; at 27pt it is too wide and extends left
+    % over the y-axis tick labels and collides with the 10^10 exponent; split into two lines halves the width.
     title({'Dimension scalability:', 'iPWO vs PWO on CEC2017'});
-    % legend 原为 northwest, 会与上方标题重叠; 移到绘图区左侧中部空白带.
+    % legend was originally 'northwest' and overlapped the title above; moved to the left-center blank band.
     legend('Location', 'west', 'Interpreter', 'none');
     if isempty(tag), ch6_print(fig, fullfile(figsdir, 'scaling_D.tif')); end
 

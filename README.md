@@ -47,7 +47,7 @@ iPWO-Reproduction/
 | Sub-package | Paper figures | Reproduces |
 |---|---|---|
 | `CEC2017/iPWO_D{10,30,50,100}_Reproducible` | qualitative 5-panel figures (a) 3-D landscape, (b) objective space, (c) trajectory, (d) average fitness, (e) search history | iPWO behaviour on CEC2017 |
-| `CEC2017/CEC2017Dim{10,30,50}` + `*_TIFF_MATLAB` | boxplots of best values + convergence curves | CEC2017 comparison vs. 8 algorithms |
+| `CEC2017/CEC2017Dim{10,30,50}` + `*_TIFF_MATLAB` | boxplots of best values + convergence curves | CEC2017 comparison statistics over the eight compared algorithms (per-function best/mean/median/Std/rank tables and the per-function figure data are included) |
 | `CEC2022/iPWO_CEC2022_Reproducible` | same qualitative panels | supplementary CEC2022 results |
 | `iPWO_Chapter6_Reproducible` | component ablation, rally ablation, θ–ρ sensitivity, average runtime, dimension scalability | mechanism verification |
 | `uav_delivery_TIFF_MATLAB` | 3-D scene, flight paths, load profile, mean cost, makespan distribution, conflict check, comparison table, sensitivity, time-window Gantt | MTA-PP engineering application |
@@ -163,6 +163,18 @@ The full **per-run raw optimization records** (`CEC2017_F*_Dim*_iPWO_Results.mat
 not included here; they are available from the corresponding author upon reasonable
 request. They are only required for the `make_iPWO_figures` path — every figure in the
 paper can be regenerated from the compact `data/repro/` files that *are* included.
+
+### Scope note — what is deliberately not shipped
+
+Two things are intentionally absent, so that nobody is misled about how far the package
+goes:
+
+1. **Raw per-run records** — see above.
+2. **The DRA and LCA baseline implementations.** The CEC2017 comparison tables
+   (`CEC2017/CEC2017Dim*/CEC2017_F*_Statistics.txt` and the summary spreadsheets)
+   contain the DRA and LCA statistics used in the paper, but the source files of those
+   two algorithms are not redistributed here. Source code is provided for the remaining
+   comparison algorithms (PWO, GWO, PSO, DE, MGO, SFOA).
 
 ---
 

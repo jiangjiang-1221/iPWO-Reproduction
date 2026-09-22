@@ -1,16 +1,16 @@
 #!/usr/env python
 # -*- coding: utf-8 -*-
-"""只重嵌论文中的 UAV 配图（不动任何正文文本）。
-把 cn-20260826-review.docx 里 Fig.5-9 对应的嵌入图替换为
-figs/ 下的新版 TIFF（Times New Roman / 28pt 重绘版）。
-图注-图配对逻辑与 update_uav_paper_vrptw.py 相同（±3 段落窗口匹配图注片段）。
-先做时间戳备份，再就地保存。"""
+"""Re-embed only the UAV figures into the paper (no body text touched).
+Replace the embedded figures for Fig.5-9 in cn-20260826-review.docx with the
+new TIFFs under figs/ (Times New Roman / 28pt redrawn versions).
+Figure-caption matching logic is the same as update_uav_paper_vrptw.py (+-3 paragraph window matching caption fragments).
+Make a timestamped backup first, then save in place."""
 import os, re, shutil, glob
 from datetime import datetime
 from PIL import Image
 from docx import Document
 
-DOCX = r"C:/Users/江文/Desktop/cn-20260826-review.docx"
+DOCX = r"C:/Users/USER/Desktop/cn-20260826-review.docx"
 PKG  = r"D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB"
 FIGS = os.path.join(PKG, "figs")
 BAK  = DOCX + ".bak_before_figrefresh_" + datetime.now().strftime("%Y%m%d_%H%M%S")

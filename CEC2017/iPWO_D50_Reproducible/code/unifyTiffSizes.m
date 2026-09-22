@@ -1,18 +1,18 @@
 function unifyTiffSizes(figDir)
-% UNIFYTIFFSIZES  统一 TIFF 图片裁剪尺寸
-%   将 figDir 下的五联图(*_5Panels.tif)统一为同一像素尺寸,
-%   将各面板子图(F*_[1-5]_*.tif)也统一为同一像素尺寸。
-%   方法: 以组内最大宽高为基准, 对较小图片用白色背景居中补齐,
-%   保证所有函数输出图片尺寸完全一致, 满足"统一切边"要求。
-%   同时保留 330 DPI 元数据。
+% UNIFYTIFFSIZES  unify TIFF image crop size
+%   unify five-panel figures (*_5Panels.tif) under figDir to the same pixel size,
+%   also unify each panel sub-figure (F*_[1-5]_*.tif) to the same pixel size.
+%   method: take the max width/height in the group as reference, pad smaller images with centered white background,
+%   ensure all function output images have identical size, meeting the "unified crop" requirement.
+%   also keep 330 DPI metadata.
 
 files = dir(fullfile(figDir, '*.tif'));
 if isempty(files)
-    fprintf('  未找到 TIFF 文件: %s\n', figDir);
+    fprintf('  No TIFF file found: %s\n', figDir);
     return;
 end
 
-% 分组: 五联图 / 子图
+% group: five-panel figure / sub-panel
 grp = zeros(numel(files), 1);
 for k = 1:numel(files)
     if contains(files(k).name, '5Panels.tif')
@@ -26,7 +26,7 @@ for g = 1:2
     idx = find(grp == g);
     if isempty(idx), continue; end
 
-    % 读取尺寸, 求组内最大宽高
+    % read sizes, find max width/height in group
     maxW = 0; maxH = 0;
     info = cell(numel(idx), 1);
     for j = 1:numel(idx)
@@ -42,11 +42,11 @@ for g = 1:2
     end
     if maxW == 0, continue; end
 
-    % 统一: 居中补齐到基准尺寸, 四周可补白(PAD)保证最宽图也留白边
+    % unify: center-pad to reference size; padding (PAD) keeps white margin on the widest image
     if g == 1
-        PAD = 0;    % 五联图: 保持与 D10/D30 一致, 不加额外白边
+        PAD = 0;    % five-panel figure: keep consistent with D10/D30, no extra white border
     else
-        PAD = 80;   % 单独面板: 四周补白(330 DPI 下约 17pt), 防止 ylabel 贴边
+        PAD = 80;   % single panel: white border around (about 17 pt at 330 DPI) to keep ylabel off the edge
     end
     CW = maxW + 2*PAD;
     CH = maxH + 2*PAD;
@@ -63,7 +63,7 @@ for g = 1:2
             end
             [h, w, ~] = size(A);
             if h == CH && w == CW
-                continue;   % 已符合
+                continue;   % already matches
             end
             canvas = uint8(255 * ones(CH, CW, 3));
             y0 = floor((CH - h) / 2) + 1;
@@ -72,13 +72,13 @@ for g = 1:2
             imwrite(canvas, p, 'Compression', 'lzw', ...
                 'Resolution', [330 330]);
         catch ME
-            warning('统一尺寸失败, 跳过 %s: %s', files(idx(j)).name, ME.message);
+            warning('Failed to unify size, skipping %s: %s', files(idx(j)).name, ME.message);
         end
     end
     if g == 1
-        fprintf('  五联图统一尺寸: %d x %d px\n', CW, CH);
+        fprintf('  Five-panel figure unified size: %d x %d px\n', CW, CH);
     else
-        fprintf('  子图统一尺寸:   %d x %d px (含 %d px 补白)\n', CW, CH, PAD);
+        fprintf('  Sub-panel unified size:   %d x %d px (%d px padding)\n', CW, CH, PAD);
     end
 end
 end

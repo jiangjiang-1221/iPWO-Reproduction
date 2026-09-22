@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 """
+# NOTE: this utility edits the Chinese manuscript copy. The Chinese literals below are
+# match/replacement strings for that document and are kept verbatim on purpose.
 Update cn-20260826-review.docx after the 6-UAV / 30-customer / TIME-WINDOW (VRPTW) re-run.
 
 Extends the previous 6/30 updater with VRPTW-specific edits, all driven by the FRESH
 comparison_table.csv produced by run_uav_delivery.m:
   * metric is now the constrained cost Z = makespan + time-window lateness penalty;
-  * problem statement (para 76) lists 时间窗 as a constraint;
-  * constraints subsection renumbered 五类 -> 六类, new 时间窗约束 paragraph inserted;
+  * problem statement (para 76) lists the time window as a constraint;
+  * constraints subsection renumbered five -> six, new time-window-constraint paragraph inserted;
   * augmented-objective prose (para 100) notes the window penalty term;
-  * statistics prose (para 111) regenerated from CSV, phrased as 约束代价 Z;
+  * statistics prose (para 111) regenerated from CSV, phrased as constrained cost Z;
   * Table 3 rewritten from CSV;
   * conclusion (para 145) and robustness (para 121) stale numbers refreshed from CSV;
   * embedded Fig.5-8 replaced with new TIFFs, and a new Gantt figure (Fig.9) inserted.
@@ -22,7 +24,7 @@ from docx.shared import Inches
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-DOCX = r"C:/Users/江文/Desktop/cn-20260826-review.docx"
+DOCX = r"C:/Users/USER/Desktop/cn-20260826-review.docx"
 PKG  = r"D:/File/GPTTest/uav_delivery/uav_delivery_TIFF_MATLAB"
 CSV  = os.path.join(PKG, "data", "comparison_table.csv")
 FIGS = os.path.join(PKG, "figs")
@@ -112,7 +114,7 @@ new_p111 = (
 # ---------- load docx ----------
 d = Document(DOCX)
 
-def find_para(substr):
+def find_para(substr):  # substring matched against source docx paragraphs; Chinese literals kept verbatim
     for i, p in enumerate(d.paragraphs):
         if substr in p.text:
             return i
@@ -163,7 +165,7 @@ else:
 i93 = find_para("运动学约束：相邻航段最大爬升角不超过 90")
 if i93 is not None:
     tw_txt = ("时间窗约束：每个客户 j 被赋予服务时间窗 [e_j, l_j]（早到需在窗前等待、晚到产生软惩罚 "
-              "ω_t·(t−l_j)）；该约束将可行性边界引入“分配—排序”空间，仅当任务分配与访问顺序同时满足时间窗时方可获得低代价解，"
+              "ω_t·(t−l_j)）；该约束将可行性边界引入“分配-排序”空间，仅当任务分配与访问顺序同时满足时间窗时方可获得低代价解，"
               "从而凸显算法在强约束下的寻优能力。")
     insert_after(i93, text=tw_txt)
     print("  inserted 时间窗约束 paragraph after", i93)
@@ -216,7 +218,7 @@ def clean_p(p):
         v = float(p)
         return f"{v:.1e}" if v < 1e-3 else f"{v:.1e}"
     except Exception:
-        return p if p not in ("-", "") else "—"
+        return p if p not in ("-", "") else "-"
 
 tbl = d.tables[3]
 labels = ["Best (s)", "Median (s)", "Mean (s)", "Std (s)", "Avg.Rank", "p-value"]
