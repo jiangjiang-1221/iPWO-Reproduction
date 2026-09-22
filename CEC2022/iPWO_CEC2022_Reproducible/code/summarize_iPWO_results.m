@@ -1,12 +1,12 @@
 % summarize_iPWO_results.m
-% 汇总 iPWO 测试结果(兼容 CEC2017/CEC2022, 自动识别基准/函数/维度),
-% 输出每个维度一份汇总 CSV: Best / Median / Mean / Std / 成功次数 / 平均耗时。
+%  summarize iPWO test results (compatible with CEC2017/CEC2022, auto-detect benchmark/function/dimension),
+%  output one summary CSV per dimension: Best / Median / Mean / Std / success runs / average runtime.
 clear; clc;
 
 outDir = fullfile(pwd, 'CEC2022_tu');
 files = dir(fullfile(outDir, 'CEC*_F*_iPWO_Results.mat'));
 if isempty(files)
-    error('未找到结果文件: %s', outDir);
+    error('No result file found: %s', outDir);
 end
 
 items = struct('prefix', {}, 'func', {}, 'dim', {});
@@ -17,7 +17,7 @@ for k = 1:numel(files)
     end
 end
 if isempty(items)
-    error('文件名格式无法解析');
+    error('File name format cannot be parsed');
 end
 
 prefix = items(1).prefix;
@@ -27,7 +27,7 @@ for di = 1:numel(dims)
     d = dims(di);
     sel = items([items.dim] == d);
 
-    fprintf('\n===== %s Dim=%d 汇总 =====\n', prefix, d);
+    fprintf('\n===== %s Dim=%d summary =====\n', prefix, d);
     fprintf('%-5s %-16s %-16s %-16s %-16s %-10s %-12s\n', ...
         'Func', 'Best', 'Median', 'Mean', 'Std', 'Success', 'AvgTime(s)');
 
@@ -48,7 +48,7 @@ for di = 1:numel(dims)
             meanV = mean(ba);
             stdV = std(ba);
         else
-            % 兼容旧数据: 以 30 次平均曲线终值近似(仅速览)
+            % legacy data: approximate with final value of 30-run average curve (overview only)
             medV = r.avg_best_curve(end);
             meanV = r.avg_best_curve(end);
             stdV = NaN;
@@ -78,5 +78,5 @@ for di = 1:numel(dims)
         end
     end
     fclose(fid);
-    fprintf('已保存: %s\n', csvFile);
+    fprintf('Saved: %s\n', csvFile);
 end

@@ -1,16 +1,16 @@
 function res = verify_panels(figDir)
-% VERIFY_PANELS  校验目录下 TIFF 面板是否满足论文出版规格
+% VERIFY_PANELS  verify directory TIFF panels meet publication spec
 %
-%   检查项:
-%     1) 像素尺寸是否为 692 x 692 (2.928cm @ 600 DPI)
-%     2) 分辨率标记是否为 600 DPI
-%     3) 四边留白(margin)是否充足 -> 判断坐标标签是否被裁切
-%     4) 是否为正方形
+%   checks:
+%     1) pixel size is 692 x 692 (2.928cm @ 600 DPI)
+%     2) resolution tag is 600 DPI
+%     3) four-side margin sufficient -> judge whether axis labels are cropped
+%     4) is square
 %
-%   用法:
-%     verify_panels('D:\...\figures');          % 指定目录
-%     verify_panels();                          % 默认 <rootDir>/figures
-%     res = verify_panels(...);                 % 返回结构体数组
+%   usage:
+%     verify_panels('D:\...\figures');          % specify directory
+%     verify_panels();                          % default <rootDir>/figures
+%     res = verify_panels(...);                 % return struct array
 
 if nargin < 1 || isempty(figDir)
     codeDir = fileparts(mfilename('fullpath'));
@@ -20,15 +20,15 @@ end
 
 EXPECT_PX  = 692;   % 2.928cm @ 600 DPI
 EXPECT_DPI = 600;
-MARGIN_MIN = 4;     % 最小可接受留白(px @600DPI), 低于此值视为标签可能被裁
+MARGIN_MIN = 4;     % min acceptable margin (px @600DPI); below this labels may be cropped
 
 d = dir(fullfile(figDir, '*.tif'));
 if isempty(d)
-    error('目录下未找到 TIFF: %s', figDir);
+    error('no TIFF found in directory: %s', figDir);
 end
 
-fprintf('校验目录: %s\n', figDir);
-fprintf('共 %d 个 TIFF\n\n', numel(d));
+fprintf('verifying directory: %s\n', figDir);
+fprintf('%d TIFFs total\n\n', numel(d));
 fprintf('%-44s %-11s %5s | %4s %4s %4s %4s | %s\n', ...
     'file', 'size', 'DPI', 'L', 'R', 'T', 'B', 'status');
 fprintf('%s\n', repmat('-', 1, 96));
@@ -46,7 +46,7 @@ for i = 1:numel(d)
     else
         G = I;
     end
-    mask = G < 250;                       % 非白像素(文字/线条)
+    mask = G < 250;                       % non-white pixels (text/lines)
     [rows, cols] = find(mask);
     if isempty(rows)
         L = info.Width; R = info.Width; T = info.Height; B = info.Height;
@@ -86,13 +86,13 @@ for i = 1:numel(d)
 end
 
 fprintf('%s\n', repmat('-', 1, 96));
-fprintf('合计 %d 个 | FAIL %d | WARN %d | OK %d\n', ...
+fprintf('total %d | FAIL %d | WARN %d | OK %d\n', ...
     numel(d), nBad, nWarn, numel(d) - nBad - nWarn);
 
 if nBad == 0 && nWarn == 0
-    fprintf('✅ 全部通过: 尺寸 %dx%d @ %d DPI, 四边留白均 >= %dpx (标签完整)\n', ...
+    fprintf(' all passed: size %dx%d @ %d DPI, all four margins >= %dpx (labels intact)\n', ...
         EXPECT_PX, EXPECT_PX, EXPECT_DPI, MARGIN_MIN);
 else
-    fprintf('⚠ 存在异常项, 请检查上表 FAIL/WARN 行\n');
+    fprintf(' anomalies found, check FAIL/WARN rows above\n');
 end
 end

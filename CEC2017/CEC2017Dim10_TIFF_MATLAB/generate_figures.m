@@ -41,7 +41,7 @@ DPI       = 330;
 ALGOS = {'iPWO','PWO','SFOA','DRA','MGO','LCA','DE','PSO','GWO'};
 num_alg = numel(ALGOS);
 
-% Palette — identical to main30New.m (lines 270–281)
+% Palette - identical to main30New.m (lines 270-281)
 palette = [ ...
     1.00 0.00 0.00; ...   % iPWO  - bright red
     0.00 0.45 0.74; ...   % PWO   - blue

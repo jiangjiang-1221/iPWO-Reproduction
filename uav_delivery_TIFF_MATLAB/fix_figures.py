@@ -12,7 +12,7 @@ from PIL import Image
 import docx
 from docx.oxml.ns import qn
 
-DOCX = r"C:/Users/江文/Desktop/cn-20260826-review.docx"
+DOCX = r"C:/Users/JiangWen/Desktop/cn-20260826-review.docx"
 PKG  = r"D:/File/GPTTest/uav_delivery/uav_delivery_TIFF_MATLAB"
 FIGS = os.path.join(PKG, "figs")
 

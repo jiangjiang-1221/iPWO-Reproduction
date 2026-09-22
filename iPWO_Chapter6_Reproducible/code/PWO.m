@@ -1,7 +1,7 @@
 function [Alpha_score, Alpha_pos, Convergence_curve] = PWO(num_agents, max_iterations, lb, ub, dim, fobj)
 % PWO - Painted Wolf Optimization Algorithm
 %
-% This function implements the Painted Wolf Optimization (PWO) algorithm.
+% Painted Wolf Optimization (PWO).
 % The code is structured for clarity and readability, while precisely 
 % preserving the original logic to ensure the reproducibility of research results.
 %

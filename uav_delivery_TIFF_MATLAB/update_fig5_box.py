@@ -1,15 +1,15 @@
 #!/usr/env python
 # -*- coding: utf-8 -*-
-"""把箱型图（boxplot，fig5_boxplot.tif，纵轴 Z = 最终解代价，与 Table 3 同指标）重嵌进论文副本 rId98。
-原 docx 被占用时保留副本。"""
+"""Re-embed the boxplot (fig5_boxplot.tif, Y-axis Z = final-solution cost, same metric as Table 3)
+into the paper copy at rId98. Keep a copy if the original docx is locked."""
 import os, glob, shutil
 from PIL import Image
 import docx
 
 SCRIPT_DIR = r"D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB"
 FIGS = os.path.join(SCRIPT_DIR, "figs")
-SRC = r"C:/Users/江文/Desktop/cn-20260826-review.docx"
-DST = r"C:/Users/江文/Desktop/cn-20260826-review_Fig6mean.docx"
+SRC = r"C:/Users/USER/Desktop/cn-20260826-review.docx"
+DST = r"C:/Users/USER/Desktop/cn-20260826-review_Fig6mean.docx"
 
 def tif_to_png(tif, max_w=1800):
     im = Image.open(tif)
@@ -25,7 +25,7 @@ def tif_to_png(tif, max_w=1800):
 d = docx.Document(SRC)
 rels = d.part.rels
 tif = glob.glob(os.path.join(FIGS, "fig5_boxplot.tif"))
-assert tif, "fig5_boxplot.tif 未找到"
+assert tif, "fig5_boxplot.tif not found"
 png = tif_to_png(tif[0])
 with open(png, "rb") as fh:
     rels["rId98"].target_part._blob = fh.read()

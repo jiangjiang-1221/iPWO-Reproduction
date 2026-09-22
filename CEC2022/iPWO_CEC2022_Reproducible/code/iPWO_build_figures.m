@@ -1,61 +1,61 @@
 function iPWO_build_figures(Function_name, dim, lb, ub, fobj, best_run, avg_best_curve, avg_fit_curve, Lcurve, outDir, opts)
-% iPWO_BUILD_FIGURES  生成 CEC2017 iPWO 单独面板图(论文出版规格)
+% iPWO_BUILD_FIGURES  generate CEC2017 iPWO single panels (publication spec)
 %
-%  ===== 版面规格(由 A4 版面反推) =====
-%    A4 = 21.0 x 29.7 cm, 上下边距 2.54 cm, 左右边距 3.18 cm
-%    => 正文可用宽度 = 21.0 - 2*3.18 = 14.64 cm
-%    => 一行恰好放 5 张 => 每张边长 = 14.64 / 5 = 2.928 cm (正方形)
+%  ===== layout spec (derived from A4 page) =====
+%    A4 = 21.0 x 29.7 cm, top/bottom margin 2.54 cm, left/right margin 3.18 cm
+%    => usable text width = 21.0 - 2*3.18 = 14.64 cm
+%    => exactly 5 panels per row => each side = 14.64 / 5 = 2.928 cm (square)
 %    => TIFF, 600 DPI  => 2.928/2.54*600 = 692 x 692 px
-%    => 导出物理字号 6 pt (比正文五号 10.5pt 显著小, 绘图区更大更舒展)
+%    => exported physical font size 6 pt (much smaller than text 10.5pt, larger plot area)
 %
-%  ===== 绘制方式 =====
-%    所见即所得: 画布即 2.928cm, 字号即 6pt, print -r600 按 1:1 输出。
-%    axes 使用 OuterPosition=[0 0 1 1] 自动布局, MATLAB 自动为
-%    标题/轴标签/刻度留出空间, 标签保证不被裁切。
+%  ===== drawing method =====
+%    WYSIWYG: canvas is 2.928cm, font is 6pt, print -r600 outputs 1:1.
+%    axes use OuterPosition=[0 0 1 1] auto layout, MATLAB auto reserves
+%    space for title/axis labels/ticks, labels guaranteed not cropped.
 %
-%  ===== 输出内容 =====
-%    - 不再生成五联图, 仅输出 5 个单独面板:
+%  ===== output =====
+%    - no more five-panel figure; output only 5 single panels:
 %        1_3D_Landscape / 2_Objective_Space / 3_Trajectory
 %        4_Average_Fitness / 5_Search_History
-%    - 每个面板同时保存 .fig 源文件到 <outDir>/fig, 便于后续修改:
-%      .fig 为等比放大的编辑版(默认 8cm 画布, 字号同步放大),
-%      视觉比例与导出图完全一致; 修改后可用 export_figs_to_tiff.m
-%      一键重新按论文规格导出。
-%    - 复现图片所需的全部数据保存到 reproDir
+%    - each panel also saves .fig source to <outDir>/fig for later editing:
+%      .fig is a proportionally enlarged editing version (default 8cm canvas, font scaled up),
+%      visual ratio identical to exported figure; after editing use export_figs_to_tiff.m
+%      to re-export at paper spec in one step.
+%    - all data needed to reproduce figures saved to reproDir
 %
-%  输入:
-%    Function_name : CEC2017 函数编号
-%    dim           : 维度
-%    lb, ub        : 边界
-%    fobj          : 目标函数句柄; 若已有缓存地形或提供 opts.landscape 可传 []
-%    best_run      : 最优一次运行结果 (score/pos/curve/history/time)
-%    avg_best_curve, avg_fit_curve : 多次运行平均曲线
-%    Lcurve        : 曲线长度
-%    outDir        : 输出目录(各面板 TIFF)
-%    opts          : 可选参数
-%        .dpi              默认 600
-%        .fontSize         默认 6   (导出后的物理字号 pt)
-%        .panelCm          默认 2.928 (导出物理边长 cm)
-%        .editCm           默认 8   (.fig 编辑画布边长 cm)
-%        .saveFig          默认 true (保存 .fig 源文件)
-%        .alg_name         默认 'iPWO'
-%        .landscapeCacheDir 地形缓存目录, 默认 outDir/landscape_cache
-%        .reproDataDir      复现数据目录, 默认 outDir/repro_data
-%        .landscape         预计算地形 struct(x1g,x2g,zGrid,base_point,zbest)
-%        .trajIter/.trajDist/.trajectoryOK  预提取轨迹(用于纯数据复现)
-%        .searchXY/.searchIter/.historyOK   预提取搜索历史(用于纯数据复现)
-%        .prefix            文件名前缀, 默认 'CEC2017' (CEC2022 传 'CEC2022')
-%        .benchLabel        图中基准名称, 默认 'CEC2017' (CEC2022 传 'CEC2022')
-%        .gridN             地形网格数, 默认 120
+%  inputs:
+%    Function_name : CEC2017 function id
+%    dim           : dimension
+%    lb, ub        : bounds
+%    fobj          : objective function handle; pass [] if cached landscape or opts.landscape given
+%    best_run      : best single run result (score/pos/curve/history/time)
+%    avg_best_curve, avg_fit_curve : average curves over multiple runs
+%    Lcurve        : curve length
+%    outDir        : output directory (panel TIFFs)
+%    opts          : optional params
+%        .dpi              default 600
+%        .fontSize         default 6   (exported physical font size pt)
+%        .panelCm          default 2.928 (exported physical side length cm)
+%        .editCm           default 8   (.fig editing canvas side length cm)
+%        .saveFig          default true (save .fig source)
+%        .alg_name         default 'iPWO'
+%        .landscapeCacheDir landscape cache dir, default outDir/landscape_cache
+%        .reproDataDir     reproduction data dir, default outDir/repro_data
+%        .landscape        precomputed landscape struct(x1g,x2g,zGrid,base_point,zbest)
+%        .trajIter/.trajDist/.trajectoryOK  pre-extracted trajectory (for pure-data reproduction)
+%        .searchXY/.searchIter/.historyOK   pre-extracted search history (for pure-data reproduction)
+%        .prefix           file name prefix, default 'CEC2017' (CEC2022 pass 'CEC2022')
+%        .benchLabel       benchmark label in figure, default 'CEC2017' (CEC2022 pass 'CEC2022')
+%        .gridN            landscape grid count, default 120
 
 if nargin < 11, opts = struct(); end
 
-%% ==================== 0. 版面规格 ====================
-K        = 4;                                  % 渲染放大倍数(小画布渲染不稳, 大画布绘制后等比缩回)
+%% ==================== 0. layout spec ====================
+K        = 4;                                  % render magnification (small-canvas render unstable, large canvas drawn then scaled back)
 dpi      = getOpt(opts, 'dpi', 600);
-fs       = getOpt(opts, 'fontSize', 6) * K;    % 绘制字号(导出缩回后物理 6pt)
-tgtCm    = getOpt(opts, 'panelCm', 2.928) * K; % 绘制画布边长(导出缩回后 2.928cm)
-editCm   = getOpt(opts, 'editCm', 8);          % .fig 编辑画布边长(cm)
+fs       = getOpt(opts, 'fontSize', 6) * K;    % drawing font size (physical 6pt after export scaling back)
+tgtCm    = getOpt(opts, 'panelCm', 2.928) * K; % drawing canvas side length (2.928cm after export scaling back)
+editCm   = getOpt(opts, 'editCm', 8);          % .fig editing canvas side length (cm)
 saveFigFile = getOpt(opts, 'saveFig', true);
 algName  = getOpt(opts, 'alg_name', 'iPWO');
 prefix   = getOpt(opts, 'prefix', 'CEC2017');
@@ -70,18 +70,18 @@ if ~exist(reproDir, 'dir'),  mkdir(reproDir);  end
 if ~exist(figSrcDir, 'dir'), mkdir(figSrcDir); end
 if ~exist(outDir, 'dir'),    mkdir(outDir);    end
 
-% ---------- 全局默认字体 ----------
+% ---------- global default font ----------
 set(0, 'DefaultAxesFontSize',     fs);
 set(0, 'DefaultTextFontSize',     fs);
 set(0, 'DefaultLegendFontSize',   fs);
 set(0, 'DefaultColorbarFontSize', fs);
-% 统一字体族为 Times New Roman（论文出版常用衬线字体）
+% unify font family to Times New Roman (common serif for publication)
 set(0, 'DefaultAxesFontName',     'Times New Roman');
 set(0, 'DefaultTextFontName',     'Times New Roman');
 set(0, 'DefaultLegendFontName',   'Times New Roman');
 set(0, 'DefaultColorbarFontName', 'Times New Roman');
 
-%% ==================== 1. 地形切片(优先缓存/预计算) ====================
+%% ==================== 1. landscape slice (cache/precompute first) ====================
 cacheFile = fullfile(cacheDir, sprintf('%s_F%d_Dim%d_landscape.mat', prefix, Function_name, dim));
 if isfield(opts, 'landscape') && ~isempty(opts.landscape)
     land = opts.landscape;
@@ -107,7 +107,7 @@ end
 x1g = land.x1g; x2g = land.x2g; zGrid = land.zGrid;
 if isfield(land, 'zbest'), zbest = land.zbest; else, zbest = NaN; end
 
-%% ==================== 2. 轨迹与搜索历史 ====================
+%% ==================== 2. trajectory and search history ====================
 if isfield(opts, 'trajectoryOK') && opts.trajectoryOK
     trajIter = opts.trajIter;
     trajDist = opts.trajDist;
@@ -127,48 +127,48 @@ if ~isempty(best_run.pos) && numel(best_run.pos) >= 2
     best_xy = best_run.pos(1:2);
 end
 
-%% ==================== 3. 五个单独面板 ====================
-% 布局策略: 绘制时 axes 占满画布, 导出前由 finalizeLayout 依据
-% MATLAB 度量的 TightInset(标题/轴标签/刻度实际所需空间)精确收缩,
-% 标签要多少空间就留多少, 保证不被裁切且绘图区最大化。
-LAYOUT_MARGIN = 0.008;   % TightInset 外的安全余量(归一化, 缩印以扩大绘图区)
+%% ==================== 3. five single panels ====================
+% layout strategy: axes fill canvas when drawing; before export finalizeLayout uses
+% MATLAB-measured TightInset (space actually needed by title/axis labels/ticks) to shrink precisely,
+% reserving exactly as much space as labels need, guaranteeing no crop and maximal plot area.
+LAYOUT_MARGIN = 0.008;   % safety margin outside TightInset (normalized, scale down to enlarge plot area)
 
-% Panel 1: 3D 地形(固定布局: 投影轴标签伸出较远, 四周预留空间; 固定框跨函数一致)
+% Panel 1: 3D landscape (fixed layout: projected axis labels extend far, margins reserved; fixed box consistent across functions)
 fig = newPanelFig(tgtCm);
-ax1 = newAxes(fig, [0.33 0.22 0.42 0.58]);   % 3D 固定框(左0.33 宽0.42: 3D投影会向左右两侧伸出, 需更大留白防裁切)
+ax1 = newAxes(fig, [0.33 0.22 0.42 0.58]);   % 3D fixed box (left0.33 width0.42: 3D projection extends left/right, needs more margin to avoid crop)
 fillPanel1(ax1, x1g, x2g, zGrid, lb, ub, Function_name, best_xy, zbest, fs, benchLab);
 finishPanel(fig, ax1, outDir, figSrcDir, sprintf('F%d_Dim%d_1_3D_Landscape', Function_name, dim), ...
     tgtCm, tgtCm / K, dpi, editCm, saveFigFile);
 
-% Panel 2: 目标空间(收敛曲线)
+% Panel 2: objective space (convergence curve)
 fig = newPanelFig(tgtCm);
 ax2 = newAxes(fig);
 fillPanel2(ax2, 1:Lcurve, avg_best_curve, algName, fs);
 finishPanel(fig, ax2, outDir, figSrcDir, sprintf('F%d_Dim%d_2_Objective_Space', Function_name, dim), ...
     tgtCm, tgtCm / K, dpi, editCm, saveFigFile);
 
-% Panel 3: 轨迹
+% Panel 3: trajectory
 fig = newPanelFig(tgtCm);
 ax3 = newAxes(fig);
 fillPanel3(ax3, trajIter, trajDist, trajectoryOK, fs);
 finishPanel(fig, ax3, outDir, figSrcDir, sprintf('F%d_Dim%d_3_Trajectory', Function_name, dim), ...
     tgtCm, tgtCm / K, dpi, editCm, saveFigFile);
 
-% Panel 4: 平均适应度
+% Panel 4: average fitness
 fig = newPanelFig(tgtCm);
 ax4 = newAxes(fig);
 fillPanel4(ax4, 1:Lcurve, avg_fit_curve, dim, algName, fs);
 finishPanel(fig, ax4, outDir, figSrcDir, sprintf('F%d_Dim%d_4_Average_Fitness', Function_name, dim), ...
     tgtCm, tgtCm / K, dpi, editCm, saveFigFile);
 
-% Panel 5: 搜索历史
+% Panel 5: search history
 fig = newPanelFig(tgtCm);
 ax5 = newAxes(fig);
 fillPanel5(ax5, x1g, x2g, zGrid, lb, ub, allXY, allIter, historyOK, best_xy, fs);
 finishPanel(fig, ax5, outDir, figSrcDir, sprintf('F%d_Dim%d_5_Search_History', Function_name, dim), ...
     tgtCm, tgtCm / K, dpi, editCm, saveFigFile);
 
-%% ==================== 4. 保存图片复现数据 ====================
+%% ==================== 4. save figure reproduction data ====================
 repro.alg_name        = algName;
 repro.Function_name   = Function_name;
 repro.dim             = dim;
@@ -193,28 +193,28 @@ repro.zbest           = zbest;
 repro.base_point      = land.base_point;
 repro.best_xy         = best_xy;
 repro.figSpecs.dpi        = dpi;
-repro.figSpecs.fontSize   = fs;           % 导出后物理字号
-repro.figSpecs.panelCm    = tgtCm;        % 导出物理边长
-repro.figSpecs.editCm     = editCm;       % .fig 编辑画布边长
+repro.figSpecs.fontSize   = fs;           % exported physical font size
+repro.figSpecs.panelCm    = tgtCm;        % exported physical side length
+repro.figSpecs.editCm     = editCm;       % .fig editing canvas side length
 repro.figSpecs.format     = 'tiff';
-repro.figSpecs.panelLayout= 'single';     % 仅单独面板(不再生成五联图)
+repro.figSpecs.panelLayout= 'single';     % single panels only (no five-panel figure)
 repro.prefix = prefix;
 repro.benchLabel = benchLab;
 reproFile = fullfile(reproDir, sprintf('%s_F%d_Dim%d_iPWO_ReproData.mat', prefix, Function_name, dim));
 save(reproFile, 'repro');
-fprintf('  复现数据已保存: %s\n', reproFile);
+fprintf('  reproduction data saved: %s\n', reproFile);
 end
 
-%% ==================== 面板画布与导出 ====================
+%% ==================== panel canvas and export ====================
 function fig = newPanelFig(tgtCm)
-% 所见即所得画布: 逻辑尺寸 = 导出物理尺寸, 字号即物理 pt
+% WYSIWYG canvas: logical size = exported physical size, font = physical pt
 fig = figure('Units', 'centimeters', 'Position', [3 3 tgtCm tgtCm], ...
     'Color', 'w', 'InvertHardcopy', 'off', 'PaperPositionMode', 'manual');
 end
 
 function ax = newAxes(fig, fixedPos)
-% 2D 面板: 传出后由 finalizeLayout 套用统一固定框(所有 2D 面板绘图区大小一致, 标签位置固定)
-% 3D 面板: 传入 fixedPos 使用专用固定框(投影轴标签需更大边距, 但仍为固定框, 跨函数一致)
+% 2D panel: finalizeLayout applies a unified fixed box (all 2D panels share plot-area size, fixed label positions)
+% 3D panel: pass fixedPos to use a dedicated fixed box (projected labels need more margin, still fixed box, consistent across functions)
 if nargin >= 2 && ~isempty(fixedPos)
     ax = axes('Parent', fig);
     ax.Position = fixedPos;
@@ -222,29 +222,29 @@ if nargin >= 2 && ~isempty(fixedPos)
 else
     ax = axes('Parent', fig);
     ax.OuterPosition = [0 0 1 1];
-    setappdata(ax, 'fixedBox', [0.28 0.26 0.51 0.54]);   % 2D 统一框(归一化): 左0.28(容纳y轴刻度标签+ylabel) 下0.26 宽0.51 高0.54
+    setappdata(ax, 'fixedBox', [0.28 0.26 0.51 0.54]);   % 2D unified box (normalized): left0.28 (holds y tick labels+ylabel) bottom0.26 width0.51 height0.54
 end
 end
 
 function finalizeLayout(ax)
-% 固定布局: 直接套用统一绘图框(归一化), 不再按 TightInset 逐图自适应收缩
-%   => 所有图片绘图区大小一致, x/y 轴标签位置固定(便于论文中多面板对齐)
-%   数轴(刻度数值)仍可因函数不同而异, 无需统一
+% fixed layout: directly apply unified plot box (normalized), no per-figure TightInset auto-shrink
+%   => all figures share plot-area size, x/y axis label positions fixed (easier multi-panel alignment in paper)
+%   axis tick values may still differ per function, no need to unify
 b = getappdata(ax, 'fixedBox');
 if isempty(b)
-    b = [0.16 0.15 0.69 0.70];   % 默认 2D 统一框
+    b = [0.16 0.15 0.69 0.70];   % default 2D unified box
 end
 ax.Position = b;
-% 显式禁止刻度标签旋转(个别渲染路径下会出现斜转导致溢出)
+% explicitly forbid tick-label rotation (some render paths rotate them, causing overflow)
 try
     ax.XAxis.TickLabelRotation = 0;
     ax.YAxis.TickLabelRotation = 0;
 catch
 end
 drawnow;
-% 色标(若有): 固定在绘图框右侧留白, 不挤压/改变绘图框(保证绘图区与其他面板一致)
-%   注: 本版色标为「独立 axes 色带」(见 makeColorbarStrip), 不链接数据 axes,
-%       因此 print -dtiff 时不会重布局数据 axes, 固定绘图框得以保持。
+% colorbar (if any): fixed in margin right of plot box, does not squeeze/change plot box (keeps plot area consistent with other panels)
+%   note: this colorbar is an 'independent axes strip' (see makeColorbarStrip), not linked to data axes,
+%       so print -dtiff won't relayout data axes, the fixed plot box is preserved.
 cb = getappdata(ax, 'panelColorbar');
 if ~isempty(cb) && isvalid(cb)
     if isa(cb, 'matlab.graphics.axis.Axes')
@@ -258,12 +258,12 @@ end
 
 function finishPanel(fig, ax, outDir, figSrcDir, nm, drawCm, physCm, dpi, editCm, saveFigFile)
 drawnow;
-% --- 0) 固定布局: 套用统一绘图框(保证所有面板绘图区大小一致, 标签位置固定) ---
+% --- 0) fixed layout: apply unified plot box (all panels share plot-area size, fixed label positions) ---
 finalizeLayout(ax);
-% --- 1) 按论文规格导出 TIFF (放大渲染 -> 面积平均缩到 692px -> 600DPI 标记) ---
+% --- 1) export TIFF per paper spec (enlarged render -> area-average to 692px -> 600DPI tag) ---
 tifPath = fullfile(outDir, [nm '.tif']);
 export_panel_tiff(fig, tifPath, physCm, dpi);
-% --- 2) 保存等比放大的 .fig 编辑版 ---
+% --- 2) save proportionally enlarged .fig editing version ---
 if saveFigFile
     if ~exist(figSrcDir, 'dir'), mkdir(figSrcDir); end
     scaleF = editCm / physCm;
@@ -277,19 +277,19 @@ if saveFigFile
     set(fig, 'Position', pos0);
 end
 close(fig);
-% --- 3) 导出自检: 报告实际像素与分辨率 ---
+% --- 3) export self-check: report actual pixels and resolution ---
 try
     info = imfinfo(tifPath);
     fprintf('  %s.tif -> %d x %d px, %d DPI\n', nm, info.Width, info.Height, ...
         round(info.XResolution));
 catch
-    fprintf('  %s.tif -> 已保存(自检信息读取失败)\n', nm);
+    fprintf('  %s.tif -> saved (self-check read failed)\n', nm);
 end
 end
 
-%% ==================== 面板绘制函数 ====================
+%% ==================== panel drawing functions ====================
 function fillPanel1(ax, x1g, x2g, zGrid, lb, ub, fn, best_xy, zbest, fs, benchLab)
-% 大数 z 值归一化, 指数并入 zlabel(避免 z 轴指数标注与标题重叠)
+% normalize large z values, fold exponent into zlabel (avoid z-axis exponent label overlapping title)
 zl = 'f';
 mx = max(zGrid(:));
 if isfinite(mx) && mx > 0
@@ -322,7 +322,7 @@ applyFont(ax, fs);
 end
 
 function fillPanel2(ax, x, y, algName, fs)
-[yPlot, ylab] = compactScale(y, 'Best score');   % 指数归一化(防自动×10^N与标题重叠)
+[yPlot, ylab] = compactScale(y, 'Best score');   % exponent normalization (prevent auto x10^N overlapping title)
 plot(ax, x, yPlot, 'LineWidth', 4.0, 'Color', [0.20 0.45 0.80]);
 grid(ax, 'on');
 box(ax, 'on');
@@ -339,14 +339,14 @@ function fillPanel3(ax, trajIter, trajDist, trajectoryOK, fs)
 grid(ax, 'on');
 box(ax, 'on');
 if trajectoryOK
-    [yPlot, ylab] = compactScale(trajDist, 'Distance');   % 指数归一化(防大数值刻度溢出)
+    [yPlot, ylab] = compactScale(trajDist, 'Distance');   % exponent normalization (prevent large-value tick overflow)
     plot(ax, trajIter, yPlot, 'LineWidth', 4.0, 'Color', [0.20 0.45 0.80]);
     hold(ax, 'on');
     plot(ax, trajIter(1), yPlot(1), 'bs', 'MarkerSize', 16, 'MarkerFaceColor', 'b');
     plot(ax, trajIter(end), yPlot(end), 'rp', 'MarkerSize', 28, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k');
     ylabel(ax, ylab);
-    % 不加图例: 'Distance/Start/Best' 三项图例宽度超过小图绘图区,
-    % 语义由起点(蓝方块)与最优点(红星)标记直观表达, 图注中说明
+    % no legend: 'Distance/Start/Best' three-item legend wider than small panel plot area,
+    % meaning conveyed by start (blue square) and best (red star) markers, explained in caption
     xlim(ax, [1, max(trajIter)]);
     limitTicks(ax, 4);
 else
@@ -355,14 +355,14 @@ else
         'Units', 'normalized', 'HorizontalAlignment', 'center', ...
         'FontSize', fs, 'Color', 'r');
 end
-% 标题和 x 轴标签放在 plot 之后(确保 MATLAB 正确计算标签位置)
+% title and x-axis label placed after plot (ensure MATLAB computes label positions correctly)
 xlabel(ax, 'Iteration');
 title(ax, 'Trajectory');
 applyFont(ax, fs);
 end
 
 function fillPanel4(ax, x, y, dim, algName, fs) %#ok<INUSD>
-[yPlot, ylab] = compactScale(y, 'Fitness');   % 指数归一化(防自动×10^N与标题重叠)
+[yPlot, ylab] = compactScale(y, 'Fitness');   % exponent normalization (prevent auto x10^N overlapping title)
 plot(ax, x, yPlot, 'LineWidth', 4.0, 'Color', [0.20 0.45 0.80]);
 grid(ax, 'on');
 box(ax, 'on');
@@ -389,11 +389,11 @@ if historyOK && ~isempty(allXY)
     scatter(ax, allXY(:,1), allXY(:,2), 24, allIter, 'filled', ...
         'MarkerFaceAlpha', 0.55, 'MarkerEdgeColor', 'none');
     colormap(ax, parula);
-    % 独立色标(自建小 axes 色带, 不链接数据 axes, 彻底避免 print 重布局挤压绘图区)
+    % independent colorbar (self-built small axes strip, not linked to data axes, fully avoids print relayout squeezing plot area)
     itMin = double(min(allIter(:)));
     itMax = double(max(allIter(:)));
     cb = makeColorbarStrip(ax.Parent, fs, itMin, itMax);
-    setappdata(ax, 'panelColorbar', cb);   % cb 为独立 axes handle, 由 finalizeLayout 定位
+    setappdata(ax, 'panelColorbar', cb);   % cb is independent axes handle, positioned by finalizeLayout
     if ~isempty(best_xy)
         plot(ax, best_xy(1), best_xy(2), 'rp', ...
             'MarkerSize', 28, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k');
@@ -404,7 +404,7 @@ else
         'FontSize', fs, 'Color', 'r');
 end
 limitTicks(ax, 4);
-% 域内 1/4、1/2、3/4 分位刻度(取整): 端点刻度标签(如 -100/3334)会溢出画布
+% in-domain 1/4,1/2,3/4 quantile ticks (rounded): endpoint tick labels (e.g. -100/3334) overflow canvas
 try
     xl = get(ax, 'XLim'); yl = get(ax, 'YLim');
     set(ax, 'XTick', round(xl(1) + [0.25 0.5 0.75] * diff(xl)));
@@ -424,17 +424,17 @@ if ~isempty(ax.ZLabel), ax.ZLabel.FontSize = fs; end
 end
 
 function cb = makeColorbarStrip(fig, fs, itMin, itMax)
-% 独立色标: 仅含一段 parula 渐变色带的极窄 axes, 与数据 axes 无任何链接,
-% 因此 print/export 时不会触发数据 axes 的重布局(固定绘图框得以保持)。
-%   不设 ylabel(避免与等高线/散点重叠), 含义由图注说明。
-grad = reshape(parula(256), 256, 1, 3);          % 256x1x3, 行序 = 色阶(由低到高)
+% independent colorbar: a very narrow axes holding one parula gradient strip, with no link to data axes,
+% so print/export won't trigger relayout of data axes (fixed plot box preserved).
+%   no ylabel (avoid overlap with contour/scatter), meaning explained in caption.
+grad = reshape(parula(256), 256, 1, 3);          % 256x1x3, row order = color scale (low to high)
 cb = axes('Parent', fig, 'Units', 'normalized');
 image(cb, grad);
-cb.YDir = 'normal';                              % 第 1 行(最低色)置于底部
+cb.YDir = 'normal';                              % row 1 (lowest color) at bottom
 cb.XTick = [];
 cb.YLim = [0.5 256.5];
 cb.YTick = [0.5 256.5];
-cb.YTickLabel = {num2str(round(itMax)), num2str(round(itMin))};  % 顶=最大迭代, 底=最小
+cb.YTickLabel = {num2str(round(itMax)), num2str(round(itMin))};  % top=max iteration, bottom=min
 cb.TickLength = [0 0];
 cb.YColor = [0 0 0];
 cb.XColor = [0 0 0];
@@ -443,7 +443,7 @@ cb.LineWidth = 2.0;
 cb.FontSize = fs;
 end
 
-%% ==================== 工具函数 ====================
+%% ==================== utility functions ====================
 function v = getOpt(opts, name, default)
 if isfield(opts, name) && ~isempty(opts.(name))
     v = opts.(name);
@@ -453,7 +453,7 @@ end
 end
 
 function [yScaled, yLabel] = compactScale(y, baseLabel)
-% 小图上大数值刻度标签会过宽, 把 10 的幂次提取到轴标签, 刻度仅保留尾数
+% large-value tick labels too wide on small figure; lift power of 10 to axis label, keep only mantissa in ticks
 y = double(y(:));
 fin = isfinite(y);
 if ~any(fin)
@@ -475,8 +475,8 @@ end
 end
 
 function limitTicks(ax, ymax_n)
-% x 轴只用 [起点, 中点] 两个刻度: 端点刻度标签(如 3334)会超出画布右缘
-% y 轴限制刻度数量, 防止小图上刻度标签重叠
+% x-axis uses only [start, mid] two ticks: endpoint tick labels (e.g. 3334) exceed canvas right edge
+% y-axis limits tick count, prevent tick-label overlap on small figure
 try
     xl = get(ax, 'XLim');
     if isfinite(xl(1)) && isfinite(xl(2)) && xl(2) > xl(1)

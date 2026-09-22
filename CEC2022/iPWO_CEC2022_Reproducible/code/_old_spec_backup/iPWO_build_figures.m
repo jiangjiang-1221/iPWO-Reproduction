@@ -1,34 +1,34 @@
 function iPWO_build_figures(Function_name, dim, lb, ub, fobj, best_run, avg_best_curve, avg_fit_curve, Lcurve, outDir, opts)
-% iPWO_BUILD_FIGURES  生成 CEC2017 iPWO 五联图与图片复现数据（论文出版规格）
+% iPWO_BUILD_FIGURES  generate CEC2017 iPWO five-panel figure and figure reproduction data (paper publication spec)
 %
-%  输出规格:
-%    - TIFF(.tif) 格式, 分辨率 330 DPI
-%    - 全图字体 18pt（标题/坐标轴/刻度/图例/色标）
-%    - 五联图统一切边（所有函数使用相同画布尺寸与布局）
-%    - 中间面板(Trajectory)的图例位于右下角(southeast)
-%    - 同时把复现图片所需的全部数据保存到 repro_data 目录
+%  output spec:
+%    - TIFF (.tif) format, 330 DPI resolution
+%    - whole-figure font 18 pt (title/axis/tick/legend/colorbar)
+%    - five-panel figure unified crop (all functions use same canvas size and layout)
+%    - middle panel (Trajectory) legend at bottom-right (southeast)
+%    - also save all data needed to reproduce figures to repro_data directory
 %
-%  输入:
-%    Function_name : CEC2017 函数编号
-%    dim           : 维度
-%    lb, ub        : 边界
-%    fobj          : 目标函数句柄; 若已有缓存地形或提供 opts.landscape 可传 []
-%    best_run      : 最优一次运行结果 (score/pos/curve/history/time)
-%    avg_best_curve, avg_fit_curve : 多次运行平均曲线
-%    Lcurve        : 曲线长度
-%    outDir        : 输出目录（五联图与子图 TIFF）
-%    opts          : 可选参数
-%        .dpi              默认 330
-%        .fontSize         默认 18
-%        .alg_name         默认 'iPWO'
-%        .landscapeCacheDir 地形缓存目录, 默认 outDir/landscape_cache
-%        .reproDataDir      复现数据目录, 默认 outDir/repro_data
-%        .landscape         预计算地形 struct(x1g,x2g,zGrid,base_point,zbest)
-%        .trajIter/.trajDist/.trajectoryOK  预提取轨迹(用于纯数据复现)
-%        .searchXY/.searchIter/.historyOK   预提取搜索历史(用于纯数据复现)
-%        .prefix            文件名前缀, 默认 'CEC2017' (CEC2022 传 'CEC2022')
-%        .benchLabel        图中基准名称, 默认 'CEC2017' (CEC2022 传 'CEC2022')
-%        .gridN             地形网格数, 默认 120
+%  inputs:
+%    Function_name : CEC2017 function index
+%    dim           : dimension
+%    lb, ub        : bounds
+%    fobj          : objective function handle; pass [] if cached landscape or opts.landscape given
+%    best_run      : best single run result (score/pos/curve/history/time)
+%    avg_best_curve, avg_fit_curve : average curves over multiple runs
+%    Lcurve        : curve length
+%    outDir        : output directory (five-panel figure and sub-panel TIFFs)
+%    opts          : optional parameters
+%        .dpi              default 330
+%        .fontSize         default 18
+%        .alg_name          default 'iPWO'
+%        .landscapeCacheDir terrain cache dir, default outDir/landscape_cache
+%        .reproDataDir      reproduction data dir, default outDir/repro_data
+%        .landscape         precomputed terrain struct (x1g,x2g,zGrid,base_point,zbest)
+%        .trajIter/.trajDist/.trajectoryOK  pre-extracted trajectory (for pure-data reproduction)
+%        .searchXY/.searchIter/.historyOK   pre-extracted search history (for pure-data reproduction)
+%        .prefix            file name prefix, default 'CEC2017' (pass 'CEC2022' for CEC2022)
+%        .benchLabel        benchmark name in figure, default 'CEC2017' (pass 'CEC2022' for CEC2022)
+%        .gridN             terrain grid count, default 120
 
 if nargin < 11, opts = struct(); end
 dpi      = getOpt(opts, 'dpi', 330);
@@ -42,13 +42,13 @@ reproDir = getOpt(opts, 'reproDataDir', fullfile(outDir, 'repro_data'));
 if ~exist(cacheDir, 'dir'), mkdir(cacheDir); end
 if ~exist(reproDir, 'dir'), mkdir(reproDir); end
 
-% ---------- 全局默认字体 ----------
+% ---------- global default fonts ----------
 set(0, 'DefaultAxesFontSize', fs);
 set(0, 'DefaultTextFontSize', fs);
 set(0, 'DefaultLegendFontSize', fs);
 set(0, 'DefaultColorbarFontSize', fs);
 
-%% ==================== 1. 地形切片(优先缓存/预计算) ====================
+%% ==================== 1. terrain slice (prefer cache/precompute) ====================
 cacheFile = fullfile(cacheDir, sprintf('%s_F%d_Dim%d_landscape.mat', prefix, Function_name, dim));
 if isfield(opts, 'landscape') && ~isempty(opts.landscape)
     land = opts.landscape;
@@ -74,7 +74,7 @@ end
 x1g = land.x1g; x2g = land.x2g; zGrid = land.zGrid;
 if isfield(land, 'zbest'), zbest = land.zbest; else, zbest = NaN; end
 
-%% ==================== 2. 轨迹与搜索历史 ====================
+%% ==================== 2. trajectory and search history ====================
 if isfield(opts, 'trajectoryOK') && opts.trajectoryOK
     trajIter = opts.trajIter;
     trajDist = opts.trajDist;
@@ -94,7 +94,7 @@ if ~isempty(best_run.pos) && numel(best_run.pos) >= 2
     best_xy = best_run.pos(1:2);
 end
 
-%% ==================== 3. 五联图(统一画布, 统一切边) ====================
+%% ==================== 3. five-panel figure (unified canvas, unified crop) ====================
 fig = figure('Position', [50 80 1800 360], 'Color', 'w', 'PaperPositionMode', 'auto');
 tiledlayout(1, 5, 'TileSpacing', 'compact', 'Padding', 'compact');
 
@@ -107,10 +107,10 @@ ax5 = nexttile; fillPanel5(ax5, x1g, x2g, zGrid, lb, ub, allXY, allIter, history
 combinedTif = fullfile(outDir, sprintf('%s_F%d_Dim%d_iPWO_5Panels.tif', prefix, Function_name, dim));
 saveTiffFig(fig, combinedTif, dpi);
 close(fig);
-fprintf('  五联图已保存: %s\n', combinedTif);
+fprintf('  Five-panel figure saved: %s\n', combinedTif);
 
-%% ==================== 4. 单独面板(独立 figure, 避免句柄失效) ====================
-fp = [50 80 560 520];   % 统一面板画布, 保证各函数子图裁剪一致
+%% ==================== 4. individual panels (separate figure, avoid handle loss) ====================
+fp = [50 80 560 520];   % unified panel canvas, consistent crop across function sub-panels
 
 fig1 = figure('Position', fp, 'Color', 'w', 'PaperPositionMode', 'auto');
 fillPanel1(axes('Parent', fig1, 'Position', [0.10 0.13 0.82 0.74]), x1g, x2g, zGrid, lb, ub, Function_name, best_xy, zbest, fs, benchLab);
@@ -132,7 +132,7 @@ fig5 = figure('Position', fp, 'Color', 'w', 'PaperPositionMode', 'auto');
 fillPanel5(axes('Parent', fig5, 'Position', [0.10 0.13 0.82 0.74]), x1g, x2g, zGrid, lb, ub, allXY, allIter, historyOK, best_xy, fs);
 saveTiffFig(fig5, fullfile(outDir, sprintf('F%d_Dim%d_5_Search_History.tif', Function_name, dim)), dpi); close(fig5);
 
-%% ==================== 5. 保存图片复现数据 ====================
+%% ==================== 5. save figure reproduction data ====================
 repro.alg_name        = algName;
 repro.Function_name   = Function_name;
 repro.dim             = dim;
@@ -164,10 +164,10 @@ repro.prefix = prefix;
 repro.benchLabel = benchLab;
 reproFile = fullfile(reproDir, sprintf('%s_F%d_Dim%d_iPWO_ReproData.mat', prefix, Function_name, dim));
 save(reproFile, 'repro');
-fprintf('  复现数据已保存: %s\n', reproFile);
+fprintf('  Reproduction data saved: %s\n', reproFile);
 end
 
-%% ==================== 面板绘制函数 ====================
+%% ==================== panel drawing functions ====================
 function fillPanel1(ax, x1g, x2g, zGrid, lb, ub, fn, best_xy, zbest, fs, benchLab)
 surf(ax, x1g, x2g, zGrid, 'EdgeColor', 'none', 'FaceAlpha', 0.95);
 hold(ax, 'on');
@@ -214,7 +214,7 @@ if trajectoryOK
     hold(ax, 'on');
     plot(ax, trajIter(1), trajDist(1), 'bs', 'MarkerSize', 7, 'MarkerFaceColor', 'b');
     plot(ax, trajIter(end), trajDist(end), 'rp', 'MarkerSize', 11, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k');
-    % 图例置于右下角(中间面板要求)
+    % legend at bottom-right (required for middle panel)
     legend(ax, 'Distance to initial best', 'Start', 'Best', ...
         'Location', 'southeast', 'FontSize', fs);
     xlim(ax, [1, max(trajIter)]);
@@ -275,7 +275,7 @@ ax.YLabel.FontSize = fs;
 ax.ZLabel.FontSize = fs;
 end
 
-%% ==================== 工具函数 ====================
+%% ==================== utility functions ====================
 function v = getOpt(opts, name, default)
 if isfield(opts, name) && ~isempty(opts.(name))
     v = opts.(name);

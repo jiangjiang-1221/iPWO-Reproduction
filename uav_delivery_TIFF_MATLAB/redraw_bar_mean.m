@@ -1,9 +1,9 @@
 function redraw_bar_mean()
-% redraw_bar_mean - 重绘 fig4_bar_mean.tif：7 算法 Mean Z 柱状图（带误差棒）
-% 原图为 matplotlib 默认 DejaVu Sans 字体，本脚本按论文标准重画：
-% Times New Roman / 28pt / 11.5x8in / 330 DPI（与其余 8 张 MATLAB 图一致）。
-% 数据来源：data/delivery_results.mat（meanv / stdv）；
-% 配色与 fig5_boxplot 的 boxColors 完全一致（iPWO 红 + 冷色系渐变）。
+% redraw_bar_mean - redraw fig4_bar_mean.tif: 7-algorithm Mean Z bar chart (with error bars)
+% original used matplotlib default DejaVu Sans font; this script redraws to paper standard:
+% Times New Roman / 28pt / 11.5x8in / 330 DPI (consistent with the other 8 MATLAB figures).
+% data source: data/delivery_results.mat (meanv / stdv);
+% color scheme identical to fig5_boxplot boxColors (iPWO red + cool-color gradient).
 
     U = 'D:\File\GPTTest\uav_delivery\uav_delivery_TIFF_MATLAB';
     addpath(U); cd(U);
@@ -18,7 +18,7 @@ function redraw_bar_mean()
     algos = D.algos; mu = D.meanv; sd = D.stdv;
     nAlg = numel(algos);
 
-    % 配色：与 fig5_boxplot 相同（iPWO 红 + 冷色系渐变）
+    % color scheme: same as fig5_boxplot (iPWO red + cool-color gradient)
     redCol = [0.90 0.15 0.20];
     coolPalette = [
         0.15  0.75  0.70   % PWO  teal
@@ -44,7 +44,7 @@ function redraw_bar_mean()
     title(ax,'Mean Z of Each Algorithm over 51 Runs','FontSize',FS,'FontWeight','bold');
     grid(ax,'on');
 
-    % 内联导出（溢出内收 + 330 DPI，与 uav_print 逻辑一致）
+    % inline export (margin retraction + 330 DPI, same logic as uav_print)
     axs = findall(fig, 'type', 'axes');
     m = 0.012;
     for a = 1:numel(axs)

@@ -1,4 +1,4 @@
-%% debug_layout.m  调试: dump 布局数值, 定位溢出元素
+%% debug_layout.m  debug: dump layout values, locate overflowing elements
 clear; clc; close all;
 
 tgtCm = 2.928; fs = 9;
@@ -26,10 +26,10 @@ ti = ax.TightInset;
 fprintf('TightInset = [%.3f %.3f %.3f %.3f]\n', ti);
 ax.Position = [ti(1)-0.015, ti(2)-0.015, 1-ti(1)-ti(3)+0.03, 1-ti(2)-ti(4)+0.03];
 drawnow;
-fprintf('ax.Position = [%.3f %.3f %.3f %.3f]  右缘=%.3f 上缘=%.3f\n', ...
+fprintf('ax.Position = [%.3f %.3f %.3f %.3f]  right=%.3f top=%.3f\n', ...
     ax.Position, ax.Position(1)+ax.Position(3), ax.Position(2)+ax.Position(4));
 
-% 每个文字对象的范围(归一化于 figure)
+% extent of each text object (normalized to figure)
 txts = findall(fig, 'Type', 'text');
 for i = 1:numel(txts)
     if isempty(txts(i).String), continue; end
@@ -39,10 +39,10 @@ for i = 1:numel(txts)
 end
 fprintf('legend Position(fig) = [%s]  Units=%s\n', sprintf('%.3f ', lgd.Position), lgd.Units);
 
-% 导出并查看
+% export and inspect
 fig.PaperUnits = 'centimeters';
 fig.PaperSize = [tgtCm tgtCm];
 fig.PaperPosition = [0 0 tgtCm tgtCm];
 print(fig, 'D:/File/GPTTest/CEC2017_Experiment/iPWO_Reproducible/CEC2017/iPWO_D10_Reproducible/figures/_test_out/_debug_p4.tif', '-dtiff', '-r600');
 close(fig);
-fprintf('调试图已导出\n');
+fprintf('debug figure exported\n');

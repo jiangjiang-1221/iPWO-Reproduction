@@ -1,6 +1,6 @@
 function validate_tw()
-% VALIDATE_TW  快速校验时间窗/容量约束是否可达且能区分算法
-%   较长预算 + 可行性计数，用于确定最终档位，不生成论文图。
+% VALIDATE_TW  quickly check that time-window/capacity constraints are reachable and distinguish algorithms
+%   longer budget + feasibility count, used to set the final difficulty level; no paper figures generated.
 script_dir = fileparts(mfilename('fullpath'));
 if isempty(script_dir), script_dir = pwd; end
 cd(script_dir); addpath(script_dir);

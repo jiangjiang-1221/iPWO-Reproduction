@@ -1,10 +1,10 @@
 function ch6_print(fig, fname, keepOpen)
-% ch6_print - 统一导出 TIFF：330 DPI，字体 27pt（11x7.5 inch 图幅下与
-% 9 英寸图幅的 22pt 视觉等大），Times New Roman，图幅 11 x 7.5 inch。
-% 用于第六章消融/机制验证全部可复现图的导出。
+% ch6_print - unified TIFF export: 330 DPI, font 27 pt (same visual size as
+% 22 pt on a 9-inch figure), Times New Roman, figure size 11 x 7.5 inch.
+% used to export all reproducible figures for Chapter 6 ablation/mechanism verification.
 %
-% ch6_print(fig, fname)          导出并关闭窗口
-% ch6_print(fig, fname, true)    导出但保留窗口（供字体审计/检查用）
+% ch6_print(fig, fname)          export and close window
+% ch6_print(fig, fname, true)    export but keep window (for font audit/inspection)
 FS = 27;
 set(fig, 'Color', 'w', ...
     'PaperUnits', 'inches', ...

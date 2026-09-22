@@ -1,7 +1,7 @@
 function [best_fitness, best_solution, Convergence_curve] = PWO_vec(N, maxFES, lb, ub, dim, fobj)
 % PWO_vec - Faithful, batch-evaluation version of Painted Wolf Optimization (PWO).
 %
-% This function preserves the update equations and the scalar-replication
+% Vectorized PWO: same update equations, with per-dimension scalar replication
 % exploration behaviour of the published PWO.m, but batches all objective
 % evaluations through a single call to fobj(X) (X is N x dim) so that the
 % CEC2017 10000*D evaluation budget can actually be executed in high

@@ -25,8 +25,8 @@ function redraw_runtime()
     b.LineStyle = 'none';
     set(gca, 'XTickLabel', algos);
     ylabel('Average CPU time (s)');
-    % 标题原为单行, 27pt 下比绘图区更宽、向左溢出到 y 轴标签处;
-    % 拆成两行后宽度减半, 完整落在绘图区正上方。
+    % title was originally one line; at 27pt it is wider than the plot area and overflows left to the y-axis label;
+    % split into two lines halves the width and sits fully above the plot area.
     title({'Average runtime per MTA-PP solve', '(MaxFEs=8000, 5 runs)'});
     grid on;
     set(gca, 'GridAlpha', 0.35, 'Box', 'on');

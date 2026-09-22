@@ -2,7 +2,7 @@ import os, hashlib
 from docx import Document
 from PIL import Image
 
-DOCX = r"C:/Users/江文/Desktop/cn-20260826-review.docx"
+DOCX = r"C:/Users/JiangWen/Desktop/cn-20260826-review.docx"
 PKG  = r"D:/File/GPTTest/uav_delivery/uav_delivery_TIFF_MATLAB"
 FIGS = os.path.join(PKG, "figs")
 
@@ -21,7 +21,7 @@ for name in ["fig1_scene","fig4_convergence","fig5_boxplot","fig6_conflict","fig
     tif_sha[name] = sha(open(png,"rb").read())
 
 d = Document(DOCX)
-print("=== rId -> 图（Fig.5-9）===")
+print("=== rId -> figures (Fig.5-9) ===")
 for rid in ["rId96","rId97","rId98","rId99","rId105"]:
     rel = d.part.rels.get(rid)
     if rel and "image" in rel.reltype:
@@ -29,9 +29,9 @@ for rid in ["rId96","rId97","rId98","rId99","rId105"]:
         m = [n for n,s in tif_sha.items() if s == sha(b)]
         print(f"  {rid}: {m[0] if m else '??? '+sha(b)}")
     else:
-        print(f"  {rid}: 不存在/非image")
+        print(f"  {rid}: missing / not an image")
 
-print("\n=== Table 3 内容 ===")
+print("\n=== Table 3 contents ===")
 for ti, tbl in enumerate(d.tables):
     txt = [[c.text.strip() for c in r.cells] for r in tbl.rows]
     flat = " | ".join(" / ".join(r) for r in txt)

@@ -70,11 +70,11 @@ function finalize_scaling()
     grid on;
     xlabel('Dimension D (log)');
     ylabel('Median objective (log, lower is better)');
-    % 标题原为单行, 27pt 下太宽、向左伸到 y 轴刻度标签上方,
-    % 与顶部 10^10 的指数部分相撞; 拆两行后宽度减半。
+    % title was originally one line; at 27pt it is too wide and extends left
+    % over the y-axis tick labels and collides with the 10^10 exponent; split into two lines halves the width.
     title({'Dimension scalability:', 'iPWO vs PWO on CEC2017'});
-    % 图例原为 northwest，会与上方标题重叠；移到绘图区左侧中部（两条曲线
-    % 之间的空白带），既不压标题也不遮挡曲线。
+    % legend was originally 'northwest' and overlapped the title above; moved to
+    % the left-center blank band between the two curves, avoiding both title and curves.
     legend('Location', 'west', 'Interpreter', 'none');
     ch6_print(fig, fullfile(figsdir, 'scaling_D.tif'));
 

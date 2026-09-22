@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """
+# NOTE: this utility edits the Chinese manuscript copy. The Chinese literals below are
+# match/replacement strings for that document and are kept verbatim on purpose.
 Update cn-20260826-review.docx (Desktop copy) after the 6-UAV / 30-customer re-run.
 Reads the FRESH comparison_table.csv + the new TIFF figures produced by the run, then:
   1) changes the engineering-instance description 4->6 UAV, 20->30 customer;
@@ -15,7 +17,7 @@ from PIL import Image
 import docx
 from docx.oxml.ns import qn
 
-DOCX = r"C:/Users/江文/Desktop/cn-20260826-review.docx"
+DOCX = r"C:/Users/USER/Desktop/cn-20260826-review.docx"
 PKG  = r"D:/File/GPTTest/uav_delivery/uav_delivery_TIFF_MATLAB"
 CSV  = os.path.join(PKG, "data", "comparison_table.csv")
 FIGS = os.path.join(PKG, "figs")
@@ -56,7 +58,7 @@ for r in rows[1:]:
     )
 print("algorithms:", ALGOS)
 
-def f2(x):  # 3 sig figs-ish
+def f2(x):  # approx 3 significant figures
     return f"{x:.2f}" if abs(x) >= 10 else f"{x:.2f}"
 
 # ---------- derived stats ----------
@@ -67,7 +69,7 @@ top = order[0]
 min_std = min(data[a]["std"] for a in ALGOS)
 conc = [a for a in ALGOS if data[a]["std"] <= 1.5 * min_std]
 conc_sorted = sorted(conc, key=lambda a: data[a]["std"])
-conc_range = f"{min(data[a]['std'] for a in conc):.2f}–{max(data[a]['std'] for a in conc):.2f}"
+conc_range = f"{min(data[a]['std'] for a in conc):.2f}-{max(data[a]['std'] for a in conc):.2f}"
 sig = [a for a in ALGOS if a != "iPWO" and data[a]["p"] not in ("-", "") and float(data[a]["p"]) < 0.05]
 nonsig = [a for a in ALGOS if a != "iPWO" and a not in sig]
 ratio = pwo["std"] / ipwo["std"]
@@ -119,7 +121,7 @@ new_p111 = (
 d = docx.Document(DOCX)
 
 # locate paragraphs
-def find_para(substr):
+def find_para(substr):  # substring matched against source docx paragraphs; Chinese literals kept verbatim
     for i, p in enumerate(d.paragraphs):
         if substr in p.text:
             return i
@@ -164,7 +166,7 @@ def clean_p(p):
             return f"{v:.1e}"
         return f"{v:.1e}"
     except Exception:
-        return p if p not in ("-", "") else "—"
+        return p if p not in ("-", "") else "-"
 
 tbl = d.tables[3]
 hdr = [c.text.strip() for c in tbl.rows[0].cells]
