@@ -26,12 +26,14 @@ iPWO-Reproduction/
 │   ├── iPWO_D100_Reproducible/                  figures/ publication TIFFs (692×692 px, 600 DPI)
 │   ├── CEC2017Dim10/  CEC2017Dim30/  CEC2017Dim50/
 │   │                                          per-function .mat / .xlsx / .png / Statistics.txt
-│   ├── CEC2017Dim10_TIFF_MATLAB/  ·Dim30·  ·Dim50·
+│   ├── CEC2017Dim10_TIFF_MATLAB/  ·Dim30·  ·Dim50·  ·Dim100·
 │   │                                          publication TIFFs of the boxplots and
 │   │                                          convergence curves + generate_figures.m
 │   ├── consistency_check.py                   package consistency audit
 │   └── consistency_report.txt
 ├── CEC2022/iPWO_CEC2022_Reproducible/         IEEE CEC2022 benchmark (D = 10/20)
+│   └── CEC2022_D10D20_TIFF_Repro/             CEC2022 boxplots + convergence curves
+│                                              (48 TIFFs) + reproduce_cec2022_figs.m
 ├── iPWO_Chapter6_Reproducible/                ablation / sensitivity / runtime / scaling
 │   ├── code/                                  iPWO variants, run_* scripts, redraw_ch6_all.m
 │   ├── data/                                  ablation + rally results, sensitivity & runtime CSVs
@@ -47,8 +49,9 @@ iPWO-Reproduction/
 | Sub-package | Paper figures | Reproduces |
 |---|---|---|
 | `CEC2017/iPWO_D{10,30,50,100}_Reproducible` | qualitative 5-panel figures (a) 3-D landscape, (b) objective space, (c) trajectory, (d) average fitness, (e) search history | iPWO behaviour on CEC2017 |
-| `CEC2017/CEC2017Dim{10,30,50}` + `*_TIFF_MATLAB` | boxplots of best values + convergence curves | CEC2017 comparison statistics over the eight compared algorithms (per-function best/mean/median/Std/rank tables and the per-function figure data are included) |
+| `CEC2017/CEC2017Dim{10,30,50}` + `*_TIFF_MATLAB` | boxplots of best values + convergence curves | CEC2017 comparison statistics over the eight compared algorithms (per-function best/mean/median/Std/rank tables and the per-function figure data are included); the `CEC2017Dim100_TIFF_MATLAB` package also ships the D = 100 boxplots and convergence curves |
 | `CEC2022/iPWO_CEC2022_Reproducible` | same qualitative panels | supplementary CEC2022 results |
+| `CEC2022/CEC2022_D10D20_TIFF_Repro` | CEC2022 boxplots of best values + convergence curves (48 TIFFs) | CEC2022 comparison statistics at D = 10 and D = 20 (per-function statistics tables and the xlsx inputs for every figure) |
 | `iPWO_Chapter6_Reproducible` | component ablation, rally ablation, θ–ρ sensitivity, average runtime, dimension scalability | mechanism verification |
 | `uav_delivery_TIFF_MATLAB` | 3-D scene, flight paths, load profile, mean cost, makespan distribution, conflict check, comparison table, sensitivity, time-window Gantt | MTA-PP engineering application |
 
